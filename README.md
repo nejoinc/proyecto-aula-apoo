@@ -42,9 +42,11 @@ Our goal is simple: make studying **personalized, verifiable, and collaborative*
 
 ---
 
-## 👥 Team & Vision  
-This project is **built by students, for students**.  
-Our vision is to empower learners with tools that adapt to their **own style of learning**, ensuring transparency, accuracy, and autonomy.
+## 👥 Team  
+This project is developed by three students:  
+- **José Manuel Jaramillo**  
+- **Samuel Romaña**  
+- **Nicolás Peña**  
 
 ---
 
