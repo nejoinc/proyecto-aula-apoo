@@ -4,7 +4,6 @@ from typing import Optional, List, Any
 import google.generativeai as genai
 from dotenv import load_dotenv
 
-# Cargar variables de entorno
 load_dotenv()
 
 class ContentProcessor:

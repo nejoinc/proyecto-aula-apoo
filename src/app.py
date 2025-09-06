@@ -12,12 +12,12 @@ class StudyBoxApp:
     def __init__(self) -> None:
         self.files: List[str] = []
         self.texts: List[str] = []
-        self.content_processor: ContentProcessor = ContentProcessor()
-        self.chatbot: ChatbotTool = ChatbotTool()
-        self.audio_generator: AudioGeneratorTool = AudioGeneratorTool()
-        self.audio_player: AudioPlayerTool = AudioPlayerTool()
-        self.flashcard_generator: FlashcardTool = FlashcardTool()
-        self.quiz_generator: QuizTool = QuizTool()
+        self.content_processor = ContentProcessor()
+        self.chatbot = ChatbotTool()
+        self.audio_generator = AudioGeneratorTool()
+        self.audio_player = AudioPlayerTool()
+        self.flashcard_generator = FlashcardTool()
+        self.quiz_generator = QuizTool()
 
     def upload_file(self, file: str) -> None:
         try: 
@@ -28,10 +28,8 @@ class StudyBoxApp:
             print(f"❌ Error al guardar el archivo: {e}")
 
     def process_files(self) -> None:
-        """Muestra menú para seleccionar archivos a procesar"""
         print("\n=== 📄 Seleccionar Archivos para Procesar ===")
         
-        # Obtener todos los archivos disponibles
         all_files = self._get_all_available_files()
         
         if not all_files:
@@ -39,26 +37,21 @@ class StudyBoxApp:
             print("   Sube archivos primero o asegúrate de que haya archivos en storage.")
             return
         
-        # Mostrar menú de selección
         selected_files = self._show_file_selection_menu(all_files)
         
         if not selected_files:
             print("❌ No se seleccionaron archivos.")
             return
         
-        # Procesar archivos seleccionados
         self._process_selected_files(selected_files)
 
     def _get_all_available_files(self) -> List[str]:
-        """Obtiene todos los archivos disponibles (de la lista y de storage)"""
-        all_files = []
+        all_files: List[str] = []
         
-        # Agregar archivos ya cargados
         for file_path in self.files:
             if os.path.exists(file_path):
                 all_files.append(file_path)
         
-        # Agregar archivos de storage que no estén ya en la lista
         storage_files = FileManager.list_files()
         for filename in storage_files:
             file_path = os.path.join(FileManager.STORAGE_DIR, filename)
@@ -68,7 +61,6 @@ class StudyBoxApp:
         return all_files
 
     def _show_file_selection_menu(self, files: List[str]) -> List[str]:
-        """Muestra menú para seleccionar archivos"""
         print(f"\n📋 Archivos disponibles ({len(files)}):")
         print("=" * 50)
         
@@ -92,9 +84,8 @@ class StudyBoxApp:
                 return files
             else:
                 try:
-                    # Parsear números seleccionados
                     indices = [int(x.strip()) for x in selection.split(",")]
-                    selected_files = []
+                    selected_files: List[str] = []
                     
                     for idx in indices:
                         if 1 <= idx <= len(files):
@@ -114,7 +105,6 @@ class StudyBoxApp:
                     print("❌ Formato inválido. Usa números separados por comas.")
 
     def _process_selected_files(self, files_to_process: List[str]) -> None:
-        """Procesa los archivos seleccionados"""
         print(f"\n[*] Procesando {len(files_to_process)} archivo(s) seleccionado(s)...")
         self.texts.clear()
         
@@ -122,17 +112,14 @@ class StudyBoxApp:
             try:
                 print(f"    📄 Procesando: {os.path.basename(file)}")
                 
-                # Determinar tipo de archivo y extraer contenido
                 text: str
                 if file.endswith(".mp3") or file.endswith(".wav"):
                     text = self.content_processor.process_audio(file)
                 else:
                     text = FileManager.extract_text(file)
 
-                # Limpiar y mejorar el texto
                 text = self.content_processor.clean_text(text)
                 
-                # Procesar con IA si está disponible
                 if text and len(text) > 10:
                     improved_text: str = self.content_processor.process_text_with_ai(text)
                     if improved_text:
@@ -147,7 +134,6 @@ class StudyBoxApp:
                 self.texts.append(error_msg)
 
     def start_chatbot(self) -> None:
-        """Inicia el chatbot de estudio interactivo"""
         if not self.texts:
             print("⚠️ No hay contenido procesado. Procesa archivos primero.")
             return
@@ -156,7 +142,6 @@ class StudyBoxApp:
         self.chatbot.start_chat_session(self.texts)
 
     def start_audio_generator(self) -> None:
-        """Inicia el generador de contenido de audio"""
         if not self.texts:
             print("⚠️ No hay contenido procesado. Procesa archivos primero.")
             return
@@ -165,12 +150,10 @@ class StudyBoxApp:
         self.audio_generator.generate_audio_content(self.texts)
 
     def start_audio_player(self) -> None:
-        """Inicia el reproductor de audio integrado"""
         print("🎧 Iniciando reproductor de audio...")
         self.audio_player.show_audio_menu()
 
     def start_flashcard_generator(self) -> None:
-        """Inicia el generador de flashcards"""
         if not self.texts:
             print("⚠️ No hay contenido procesado. Procesa archivos primero.")
             return
@@ -179,7 +162,6 @@ class StudyBoxApp:
         self.flashcard_generator.generate_flashcards(self.texts)
 
     def start_quiz_generator(self) -> None:
-        """Inicia el generador de quiz"""
         if not self.texts:
             print("⚠️ No hay contenido procesado. Procesa archivos primero.")
             return
@@ -188,7 +170,6 @@ class StudyBoxApp:
         self.quiz_generator.generate_quiz(self.texts)
 
     def show_key_concepts(self) -> None:
-        """Muestra los conceptos clave extraídos de los textos procesados"""
         print("[*] Extrayendo conceptos clave...")
         if not self.texts:
             print("⚠️ No hay textos procesados. Use 'Procesar archivos' primero.")
@@ -206,15 +187,13 @@ class StudyBoxApp:
             else:
                 print("   No se pudieron extraer conceptos.")
         
-        # Mostrar conceptos únicos
         unique_concepts: List[str] = list(set(all_concepts))
         if unique_concepts:
             print(f"\n🎯 Conceptos únicos encontrados ({len(unique_concepts)}):")
-            for concept in unique_concepts[:15]:  # Mostrar máximo 15
+            for concept in unique_concepts[:15]:
                 print(f"   • {concept}")
 
     def reload_files_from_storage(self) -> None:
-        """Recarga automáticamente todos los archivos desde storage"""
         print("🔄 Recargando archivos desde storage...")
         self.files.clear()
         
