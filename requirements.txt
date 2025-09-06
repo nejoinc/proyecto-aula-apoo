@@ -1,0 +1,24 @@
+# StudyBox - Dependencias principales
+# =====================================
+
+# IA y procesamiento de texto
+google-generativeai>=0.8.0
+python-dotenv>=1.0.0
+
+# Generación de audio
+pyttsx3>=2.90
+requests>=2.32.0
+pygame>=2.5.0
+
+# Procesamiento de documentos (existentes)
+pdfplumber>=0.9.0
+PyPDF2>=3.0.0
+python-docx>=0.8.11
+
+# Reconocimiento de voz y OCR
+speechrecognition>=3.10.0
+pytesseract>=0.3.10
+pillow>=10.0.0
+
+# Dependencias adicionales para funcionalidad completa
+typing-extensions>=4.0.0

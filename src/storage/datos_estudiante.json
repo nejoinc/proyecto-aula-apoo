@@ -1,0 +1,31 @@
+{
+  "estudiante": {
+    "nombre": "María García",
+    "edad": 20,
+    "carrera": "Ingeniería en Sistemas",
+    "materias": [
+      {
+        "nombre": "Programación Orientada a Objetos",
+        "creditos": 4,
+        "profesor": "Dr. Juan Pérez"
+      },
+      {
+        "nombre": "Estructuras de Datos",
+        "creditos": 3,
+        "profesor": "Dra. Ana López"
+      },
+      {
+        "nombre": "Bases de Datos",
+        "creditos": 4,
+        "profesor": "Ing. Carlos Ruiz"
+      }
+    ],
+    "promedio": 8.5,
+    "semestre": 4
+  },
+  "objetivos": [
+    "Aprender conceptos avanzados de POO",
+    "Desarrollar proyectos prácticos",
+    "Mejorar habilidades de programación"
+  ]
+}

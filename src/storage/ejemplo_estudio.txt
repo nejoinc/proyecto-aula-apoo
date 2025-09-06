@@ -1,0 +1,38 @@
+# Introducción a la Programación Orientada a Objetos
+
+## Conceptos Fundamentales
+
+La Programación Orientada a Objetos (POO) es un paradigma de programación que se basa en el concepto de "objetos". Un objeto es una entidad que tiene:
+
+### Propiedades (Atributos)
+- **Estado**: Los datos que almacena el objeto
+- **Comportamiento**: Las acciones que puede realizar el objeto
+- **Identidad**: Lo que hace único al objeto
+
+### Principios de la POO
+
+1. **Encapsulación**: Ocultar los detalles internos de implementación
+2. **Herencia**: Crear nuevas clases basadas en clases existentes
+3. **Polimorfismo**: Mismo método, diferentes comportamientos
+4. **Abstracción**: Simplificar la complejidad del mundo real
+
+### Ejemplo Práctico
+
+```python
+class Estudiante:
+    def __init__(self, nombre, edad):
+        self.nombre = nombre
+        self.edad = edad
+    
+    def estudiar(self, materia):
+        return f"{self.nombre} está estudiando {materia}"
+```
+
+Este ejemplo muestra cómo crear una clase Estudiante con atributos (nombre, edad) y métodos (estudiar).
+
+### Beneficios de la POO
+
+- **Reutilización de código**: Crear componentes reutilizables
+- **Mantenibilidad**: Fácil de mantener y modificar
+- **Escalabilidad**: Crecer de manera organizada
+- **Modularidad**: Dividir problemas complejos en partes simples
