@@ -1,6 +1,6 @@
 import os
 import re
-from typing import Optional
+from typing import Optional, List, Any
 import google.generativeai as genai
 from dotenv import load_dotenv
 
@@ -9,16 +9,16 @@ load_dotenv()
 
 class ContentProcessor:
     
-    def __init__(self):
+    def __init__(self) -> None:
         """Inicializa el procesador con cliente de IA"""
         try:
-            api_key = os.getenv('GEMINI_API_KEY')
+            api_key: Optional[str] = os.getenv('GEMINI_API_KEY')
             if api_key and api_key != 'tu_api_key_aqui':
                 genai.configure(api_key=api_key)
                 
                 # Intentar con diferentes modelos disponibles
-                model_names = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
-                self.model = None
+                model_names: List[str] = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
+                self.model: Optional[Any] = None
                 
                 for model_name in model_names:
                     try:
@@ -30,7 +30,7 @@ class ContentProcessor:
                         continue
                 
                 if self.model:
-                    self.ai_available = True
+                    self.ai_available: bool = True
                 else:
                     self.ai_available = False
                     print("❌ Ningún modelo de Gemini disponible")
@@ -53,7 +53,7 @@ class ContentProcessor:
         if self.ai_available:
             try:
                 # Simulación de transcripción con IA
-                response = self.model.generate_content(
+                response: Any = self.model.generate_content(
                     f"Transcribe este archivo de audio: {os.path.basename(file_path)}"
                 )
                 return response.text
@@ -71,7 +71,7 @@ class ContentProcessor:
             return text
         
         try:
-            prompt = f"""
+            prompt: str = f"""
             Procesa y mejora este texto para estudio:
             - Corrige errores ortográficos
             - Mejora la estructura
@@ -81,7 +81,7 @@ class ContentProcessor:
             Texto: {text[:1000]}
             """
             
-            response = self.model.generate_content(prompt)
+            response: Any = self.model.generate_content(prompt)
             return response.text
         except Exception as e:
             print(f"❌ Error en procesamiento IA: {e}")
@@ -109,7 +109,7 @@ class ContentProcessor:
         
         return text
 
-    def extract_key_concepts(self, text: str) -> list[str]:
+    def extract_key_concepts(self, text: str) -> List[str]:
         """
         Extrae conceptos clave del texto usando IA.
         """
@@ -117,17 +117,17 @@ class ContentProcessor:
             return []
         
         try:
-            prompt = f"""
+            prompt: str = f"""
             Extrae los conceptos clave más importantes de este texto para estudio.
             Devuelve solo una lista de conceptos, uno por línea:
             
             {text[:800]}
             """
             
-            response = self.model.generate_content(prompt)
+            response: Any = self.model.generate_content(prompt)
             
             # Dividir respuesta en líneas y limpiar
-            concepts = [line.strip() for line in response.text.split('\n') if line.strip()]
+            concepts: List[str] = [line.strip() for line in response.text.split('\n') if line.strip()]
             return concepts[:10]  # Máximo 10 conceptos
             
         except Exception as e:

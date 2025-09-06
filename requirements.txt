@@ -22,3 +22,4 @@ pillow>=10.0.0
 
 # Dependencias adicionales para funcionalidad completa
 typing-extensions>=4.0.0
+pyperclip>=1.8.2

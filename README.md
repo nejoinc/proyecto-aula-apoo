@@ -117,8 +117,8 @@ This project is developed by three students:
 - [x] Audio generation (multiple formats)  
 - [x] Key concepts extraction  
 - [x] Summaries (short / medium / detailed)  
-- [ ] Flashcard generator (enhanced)  
-- [ ] Quiz/exam generator (enhanced)  
+- [x] Flashcard generator (enhanced)  
+- [x] Quiz/exam generator (enhanced)  
 - [ ] Export options (PDF, CSV, Anki)  
 - [ ] Collaborative study mode  
 - [ ] Web interface  

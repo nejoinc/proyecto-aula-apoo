@@ -1,19 +1,23 @@
 import os
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from .file_manager import FileManager
 from .content_processor import ContentProcessor
 from .tools.chatbot_tool import ChatbotTool
 from .tools.audio_generator_tool import AudioGeneratorTool
 from .tools.audio_player_tool import AudioPlayerTool
+from .tools.flashcard_tool import FlashcardTool
+from .tools.quiz_tool import QuizTool
 
 class StudyBoxApp:
-    def __init__(self):
-        self.files: list[str] = []
-        self.texts: list[str] = []
-        self.content_processor = ContentProcessor()
-        self.chatbot = ChatbotTool()
-        self.audio_generator = AudioGeneratorTool()
-        self.audio_player = AudioPlayerTool()
+    def __init__(self) -> None:
+        self.files: List[str] = []
+        self.texts: List[str] = []
+        self.content_processor: ContentProcessor = ContentProcessor()
+        self.chatbot: ChatbotTool = ChatbotTool()
+        self.audio_generator: AudioGeneratorTool = AudioGeneratorTool()
+        self.audio_player: AudioPlayerTool = AudioPlayerTool()
+        self.flashcard_generator: FlashcardTool = FlashcardTool()
+        self.quiz_generator: QuizTool = QuizTool()
 
     def upload_file(self, file: str) -> None:
         try: 
@@ -45,7 +49,7 @@ class StudyBoxApp:
         # Procesar archivos seleccionados
         self._process_selected_files(selected_files)
 
-    def _get_all_available_files(self) -> list[str]:
+    def _get_all_available_files(self) -> List[str]:
         """Obtiene todos los archivos disponibles (de la lista y de storage)"""
         all_files = []
         
@@ -63,7 +67,7 @@ class StudyBoxApp:
         
         return all_files
 
-    def _show_file_selection_menu(self, files: list[str]) -> list[str]:
+    def _show_file_selection_menu(self, files: List[str]) -> List[str]:
         """Muestra menú para seleccionar archivos"""
         print(f"\n📋 Archivos disponibles ({len(files)}):")
         print("=" * 50)
@@ -109,7 +113,7 @@ class StudyBoxApp:
                 except ValueError:
                     print("❌ Formato inválido. Usa números separados por comas.")
 
-    def _process_selected_files(self, files_to_process: list[str]) -> None:
+    def _process_selected_files(self, files_to_process: List[str]) -> None:
         """Procesa los archivos seleccionados"""
         print(f"\n[*] Procesando {len(files_to_process)} archivo(s) seleccionado(s)...")
         self.texts.clear()
@@ -119,13 +123,14 @@ class StudyBoxApp:
                 print(f"    📄 Procesando: {os.path.basename(file)}")
                 
                 # Determinar tipo de archivo y extraer contenido
+                text: str
                 if file.endswith(".mp3") or file.endswith(".wav"):
-                    text: str = self.content_processor.process_audio(file)
+                    text = self.content_processor.process_audio(file)
                 else:
-                    text: str = FileManager.extract_text(file)
+                    text = FileManager.extract_text(file)
 
                 # Limpiar y mejorar el texto
-                text: str = self.content_processor.clean_text(text)
+                text = self.content_processor.clean_text(text)
                 
                 # Procesar con IA si está disponible
                 if text and len(text) > 10:
@@ -164,6 +169,24 @@ class StudyBoxApp:
         print("🎧 Iniciando reproductor de audio...")
         self.audio_player.show_audio_menu()
 
+    def start_flashcard_generator(self) -> None:
+        """Inicia el generador de flashcards"""
+        if not self.texts:
+            print("⚠️ No hay contenido procesado. Procesa archivos primero.")
+            return
+        
+        print(f"🃏 Iniciando generador de flashcards con {len(self.texts)} archivo(s) procesado(s)...")
+        self.flashcard_generator.generate_flashcards(self.texts)
+
+    def start_quiz_generator(self) -> None:
+        """Inicia el generador de quiz"""
+        if not self.texts:
+            print("⚠️ No hay contenido procesado. Procesa archivos primero.")
+            return
+        
+        print(f"🎯 Iniciando generador de quiz con {len(self.texts)} archivo(s) procesado(s)...")
+        self.quiz_generator.generate_quiz(self.texts)
+
     def show_key_concepts(self) -> None:
         """Muestra los conceptos clave extraídos de los textos procesados"""
         print("[*] Extrayendo conceptos clave...")
@@ -171,10 +194,10 @@ class StudyBoxApp:
             print("⚠️ No hay textos procesados. Use 'Procesar archivos' primero.")
             return
         
-        all_concepts: list[str] = []
+        all_concepts: List[str] = []
         for i, text in enumerate(self.texts):
             print(f"\n📚 Conceptos del archivo {i+1}:")
-            concepts: list[str] = self.content_processor.extract_key_concepts(text)
+            concepts: List[str] = self.content_processor.extract_key_concepts(text)
             all_concepts.extend(concepts)
             
             if concepts:
@@ -184,7 +207,7 @@ class StudyBoxApp:
                 print("   No se pudieron extraer conceptos.")
         
         # Mostrar conceptos únicos
-        unique_concepts: list[str] = list(set(all_concepts))
+        unique_concepts: List[str] = list(set(all_concepts))
         if unique_concepts:
             print(f"\n🎯 Conceptos únicos encontrados ({len(unique_concepts)}):")
             for concept in unique_concepts[:15]:  # Mostrar máximo 15
@@ -195,13 +218,13 @@ class StudyBoxApp:
         print("🔄 Recargando archivos desde storage...")
         self.files.clear()
         
-        storage_files = FileManager.list_files()
+        storage_files: List[str] = FileManager.list_files()
         if not storage_files:
             print("⚠️ No hay archivos en storage.")
             return
         
         for filename in storage_files:
-            file_path = os.path.join(FileManager.STORAGE_DIR, filename)
+            file_path: str = os.path.join(FileManager.STORAGE_DIR, filename)
             self.files.append(file_path)
             print(f"    📄 Cargado: {filename}")
         

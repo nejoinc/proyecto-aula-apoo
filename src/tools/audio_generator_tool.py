@@ -693,34 +693,35 @@ Genera el script completo:
             return None
 
     def _play_audio_instructions(self, audio_path: str) -> None:
-        """Muestra instrucciones y reproduce el audio automáticamente"""
+        """Muestra instrucciones y abre el reproductor de consola"""
         print(f"\n🎧 Audio generado exitosamente!")
         print(f"📁 Ubicación: {audio_path}")
         
-        # Intentar reproducir automáticamente
+        print(f"\n🎵 Abriendo reproductor de consola...")
+        print(f"🔊 El audio se reproducirá directamente aquí")
+        
+        # Importar y usar el reproductor de consola
         try:
-            import os
-            import platform
+            from .audio_player_tool import AudioPlayerTool
+            player = AudioPlayerTool()
             
-            if platform.system() == "Windows":
-                os.startfile(audio_path)
-                print("🔊 Reproduciendo audio automáticamente...")
-            elif platform.system() == "Darwin":  # macOS
-                os.system(f"afplay '{audio_path}'")
-                print("🔊 Reproduciendo audio automáticamente...")
-            elif platform.system() == "Linux":
-                os.system(f"aplay '{audio_path}'")
-                print("🔊 Reproduciendo audio automáticamente...")
+            # Reproducir el archivo específico
+            if player.play_audio_file(audio_path):
+                print("✅ Audio reproducido exitosamente")
             else:
-                print("🔊 Abre el archivo para reproducir el audio")
+                print("❌ Error reproduciendo el audio")
+                self._show_manual_options(audio_path)
                 
         except Exception as e:
-            print(f"⚠️ No se pudo reproducir automáticamente: {e}")
-            print(f"🖱️ Doble clic en el archivo para reproducir: {audio_path}")
-        
-        print(f"\n💡 Comandos útiles:")
-        print(f"• ⌨️ Reproducir: py -c \"import os; os.startfile('{audio_path}')\"")
-        print(f"• 📁 Abrir carpeta: explorer \"{os.path.dirname(audio_path)}\"")
+            print(f"❌ Error abriendo reproductor: {e}")
+            self._show_manual_options(audio_path)
+
+    def _show_manual_options(self, audio_path: str) -> None:
+        """Muestra opciones manuales si falla el reproductor automático"""
+        print(f"\n🎵 Opciones alternativas:")
+        print(f"• 🎧 Usa el Reproductor de Audio integrado (Opción 5 del menú)")
+        print(f"• 🖱️ Doble clic en el archivo para abrir con reproductor externo")
+        print(f"• ⌨️ Comando rápido: py -c \"import os; os.startfile('{audio_path}')\"")
 
     def _show_online_services_info(self) -> None:
         """Muestra información sobre servicios TTS online"""

@@ -1,0 +1,27 @@
+[
+  {
+    "Q": "En la POO, la encapsulación protege los datos internos de un objeto de modificaciones no autorizadas.",
+    "Answer": "Verdadero",
+    "Explanation": "La encapsulación es un principio fundamental de la POO que oculta la implementación interna y protege los datos."
+  },
+  {
+    "Q": "El método `__init__` en Python se utiliza para definir las propiedades de una clase, pero no para inicializarlas.",
+    "Answer": "Falso",
+    "Explanation": "El método `__init__` en Python es un constructor que se utiliza para inicializar los atributos de un objeto al crearlo."
+  },
+  {
+    "Q": "La herencia en POO permite crear nuevas clases sin utilizar las propiedades y métodos de clases existentes.",
+    "Answer": "Falso",
+    "Explanation": "La herencia permite crear nuevas clases basándose en clases existentes, heredando sus propiedades y métodos."
+  },
+  {
+    "Q": "El polimorfismo permite que objetos de diferentes clases respondan de la misma manera al mismo mensaje.",
+    "Answer": "Falso",
+    "Explanation": "El polimorfismo permite que objetos de diferentes clases respondan de manera diferente al mismo mensaje."
+  },
+  {
+    "Q": "La abstracción en POO implica modelar objetos incluyendo todos los detalles, sin importar su relevancia.",
+    "Answer": "Falso",
+    "Explanation": "La abstracción simplifica la complejidad, modelando objetos con sus características esenciales e ignorando detalles irrelevantes."
+  }
+]

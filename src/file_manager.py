@@ -1,33 +1,35 @@
 import os
 import shutil
-from typing import Optional
+from typing import Optional, List, Any
 
 class FileManager:
     STORAGE_DIR = os.path.join(os.path.dirname(__file__), "storage")
     
     @staticmethod
-    def init_storage():
+    def init_storage() -> None:
         if not os.path.exists(FileManager.STORAGE_DIR):
             os.makedirs(FileManager.STORAGE_DIR)
 
     @staticmethod
-    def save_file(file_path): 
+    def save_file(file_path: str) -> str: 
         """ Guarda archivo en almacenamiento """ 
         if not os.path.isfile(file_path):
             raise FileNotFoundError(f"El archivo {file_path} no existe")
         
         FileManager.init_storage()
-        filename = os.path.basename(file_path)
-        dest_path = os.path.join(FileManager.STORAGE_DIR, filename)
+        filename: str = os.path.basename(file_path)
+        dest_path: str = os.path.join(FileManager.STORAGE_DIR, filename)
         
         # Si el archivo ya está en storage, solo retornar la ruta
         if os.path.abspath(file_path) == os.path.abspath(dest_path):
             return dest_path
         
         # Si el archivo ya existe en destino, agregar número
-        counter = 1
-        original_dest = dest_path
+        counter: int = 1
+        original_dest: str = dest_path
         while os.path.exists(dest_path):
+            name: str
+            ext: str
             name, ext = os.path.splitext(filename)
             dest_path = os.path.join(FileManager.STORAGE_DIR, f"{name}_{counter}{ext}")
             counter += 1
@@ -36,9 +38,9 @@ class FileManager:
         return dest_path
 
     @staticmethod
-    def delete_file(filename):
+    def delete_file(filename: str) -> bool:
         """ Elimina archivo de almacenamiento """ 
-        path = os.path.join(FileManager.STORAGE_DIR, filename) 
+        path: str = os.path.join(FileManager.STORAGE_DIR, filename) 
         if os.path.exists(path):
             os.remove(path) 
             return True 
@@ -46,11 +48,11 @@ class FileManager:
 
 
     @staticmethod 
-    def get_file_info(filename): 
+    def get_file_info(filename: str) -> Optional[dict]:
         """ Obtiene información de un archivo """ 
-        path = os.path.join(FileManager.STORAGE_DIR, filename) 
+        path: str = os.path.join(FileManager.STORAGE_DIR, filename) 
         if os.path.exists(path):
-            size = os.path.getsize(path)  
+            size: int = os.path.getsize(path)  
             return {
                 "name": filename,
                 "size": size,
@@ -59,7 +61,7 @@ class FileManager:
         return None
 
     @staticmethod
-    def list_files():
+    def list_files() -> List[str]:
         """ Lista archivos en almacenamiento """ 
         FileManager.init_storage()
         return os.listdir(FileManager.STORAGE_DIR)
@@ -73,7 +75,7 @@ class FileManager:
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Archivo no encontrado: {file_path}")
         
-        file_extension = os.path.splitext(file_path)[1].lower()
+        file_extension: str = os.path.splitext(file_path)[1].lower()
         
         try:
             if file_extension in ['.txt', '.md', '.py']:
@@ -98,21 +100,21 @@ class FileManager:
         """Extrae texto de archivos JSON"""
         import json
         with open(file_path, 'r', encoding='utf-8') as file:
-            data = json.load(file)
+            data: Any = json.load(file)
             return f"Contenido JSON: {json.dumps(data, indent=2, ensure_ascii=False)}"
 
     @staticmethod
     def _extract_csv_file(file_path: str) -> str:
         """Extrae texto de archivos CSV"""
         import csv
-        content = []
+        content: List[str] = []
         with open(file_path, 'r', encoding='utf-8') as file:
-            reader = csv.reader(file)
+            reader: Any = csv.reader(file)
             for row in reader:
                 content.append(" | ".join(row))
         return "Contenido CSV:\n" + "\n".join(content)
 
     @staticmethod
-    def get_supported_extensions() -> list[str]:
+    def get_supported_extensions() -> List[str]:
         """Retorna las extensiones de archivo soportadas"""
         return ['.txt', '.md', '.py', '.json', '.csv', '.mp3', '.wav']

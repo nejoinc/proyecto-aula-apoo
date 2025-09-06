@@ -1,0 +1,34 @@
+[
+  {
+    "Q": "¿Qué es la Programación Orientada a Objetos (POO)?",
+    "A": "Un paradigma de programación que organiza el código alrededor de 'objetos', que combinan propiedades (estado), comportamiento (métodos) e identidad."
+  },
+  {
+    "Q": "¿Qué son las propiedades de un objeto en POO?",
+    "A": "Son los atributos que describen el estado del objeto, como nombre, edad o color.  Almacenan los datos del objeto."
+  },
+  {
+    "Q": "¿Qué son los métodos de un objeto en POO?",
+    "A": "Son las acciones que el objeto puede realizar, definidas como funciones dentro de la clase. Ejemplos: correr(), saltar(), calcular()."
+  },
+  {
+    "Q": "Nombra los cuatro principios fundamentales de la POO.",
+    "A": "Encapsulación, Herencia, Polimorfismo y Abstracción."
+  },
+  {
+    "Q": "¿Qué es la encapsulación en POO?",
+    "A": "Oculta la implementación interna de un objeto, mostrando solo la interfaz necesaria. Protege los datos y simplifica el uso."
+  },
+  {
+    "Q": "¿Qué es la herencia en POO?",
+    "A": "Permite crear nuevas clases basadas en clases existentes, heredando propiedades y comportamientos, y añadiendo o modificando funcionalidades."
+  },
+  {
+    "Q": "¿Qué es el polimorfismo en POO?",
+    "A": "Permite que objetos de diferentes clases respondan de manera diferente al mismo mensaje (llamada a método), ofreciendo flexibilidad y extensibilidad."
+  },
+  {
+    "Q": "¿Qué es la abstracción en POO?",
+    "A": "Simplifica la complejidad al modelar solo las características relevantes para el problema, enfocándose en 'qué' hace un objeto, no en 'cómo'."
+  }
+]

@@ -36,7 +36,8 @@ class AudioPlayerTool:
             if self.is_playing:
                 self.stop_audio()
             
-            print(f"🎵 Reproduciendo: {os.path.basename(file_path)}")
+            print(f"🎵 Cargando audio: {os.path.basename(file_path)}")
+            print("🔊 Iniciando reproducción directa en consola...")
             
             # Cargar y reproducir archivo
             pygame.mixer.music.load(file_path)
@@ -76,24 +77,35 @@ class AudioPlayerTool:
                 print("▶️ Reproducción reanudada")
 
     def _show_playback_controls(self) -> None:
-        """Muestra controles de reproducción"""
-        print("\n🎧 Controles de reproducción:")
+        """Muestra controles de reproducción y reproduce directamente en consola"""
+        print("\n🎧 Reproduciendo directamente en consola...")
         print("• Presiona ENTER para pausar/reanudar")
         print("• Presiona 's' + ENTER para detener")
         print("• Presiona 'q' + ENTER para salir")
+        print("• 🔊 Audio reproduciéndose ahora...")
         
         # Hilo para monitorear controles
         control_thread = threading.Thread(target=self._monitor_controls)
         control_thread.daemon = True
         control_thread.start()
         
-        # Esperar a que termine la reproducción
-        while self.is_playing and pygame.mixer.music.get_busy():
-            time.sleep(0.1)
+        # Mostrar progreso mientras reproduce
+        self._show_playback_progress()
         
         if self.is_playing:
             print("✅ Reproducción completada")
             self.is_playing = False
+
+    def _show_playback_progress(self) -> None:
+        """Muestra progreso de reproducción en consola"""
+        start_time = time.time()
+        
+        while self.is_playing and pygame.mixer.music.get_busy():
+            elapsed = int(time.time() - start_time)
+            print(f"\r🔊 Reproduciendo... {elapsed}s", end="", flush=True)
+            time.sleep(1)
+        
+        print()  # Nueva línea al final
 
     def _monitor_controls(self) -> None:
         """Monitorea entrada del usuario para controles"""
@@ -156,8 +168,10 @@ class AudioPlayerTool:
             print("💡 Genera algunos audios primero usando el Generador de Audio.")
             return
         
-        print("\n🎵 REPRODUCTOR DE AUDIO - StudyBox")
-        print("="*50)
+        print("\n🎵 REPRODUCTOR DE AUDIO INTEGRADO - StudyBox")
+        print("="*60)
+        print("🔊 Reproduce audio directamente en la consola (sin abrir reproductor externo)")
+        print("="*60)
         print("📁 Archivos de audio disponibles:")
         
         for i, file_path in enumerate(audio_files, 1):
@@ -165,11 +179,13 @@ class AudioPlayerTool:
             file_size = os.path.getsize(file_path)
             print(f"{i:2d}. {filename} ({file_size} bytes)")
         
-        print("="*50)
-        print("Opciones:")
-        print("• Ingresa número para reproducir archivo")
+        print("="*60)
+        print("🎧 Opciones de reproducción:")
+        print("• Ingresa número para reproducir archivo EN LA CONSOLA")
         print("• Ingresa 'todos' para reproducir secuencialmente")
         print("• Ingresa '0' para volver al menú principal")
+        print("="*60)
+        print("💡 El audio se reproduce directamente aquí, no se abre reproductor externo")
         
         while True:
             try:
@@ -198,17 +214,19 @@ class AudioPlayerTool:
                 print(f"❌ Error: {e}")
 
     def _play_all_audio_files(self, audio_files: List[str]) -> None:
-        """Reproduce todos los archivos de audio secuencialmente"""
-        print(f"\n🔄 Reproduciendo {len(audio_files)} archivo(s) secuencialmente...")
+        """Reproduce todos los archivos de audio secuencialmente en consola"""
+        print(f"\n🔄 Reproduciendo {len(audio_files)} archivo(s) secuencialmente EN LA CONSOLA...")
+        print("🔊 Todos los audios se reproducirán directamente aquí")
         
         for i, file_path in enumerate(audio_files, 1):
             filename = os.path.basename(file_path)
             print(f"\n📀 Archivo {i}/{len(audio_files)}: {filename}")
+            print("🎧 Reproduciendo directamente en consola...")
             
             if self.play_audio_file(file_path):
                 if i < len(audio_files):
                     print("⏭️ Preparando siguiente archivo...")
-                    time.sleep(1)
+                    time.sleep(2)
             else:
                 print(f"❌ Error reproduciendo {filename}")
                 break
