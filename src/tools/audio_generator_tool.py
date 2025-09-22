@@ -48,19 +48,19 @@ class AudioGeneratorTool:
             print("❌ No hay contenido procesado. Procesa archivos primero.")
             return
         
-        print("\n" + "="*60)
-        print("🎵 GENERADOR DE AUDIO EDUCATIVO - StudyBox AI")
-        print("="*60)
-        print("💡 Tipos de audio disponibles:")
-        print("   1. 📚 Resumen narrado")
-        print("   2. 🎯 Explicación de conceptos clave")
-        print("   3. 📖 Lectura completa del contenido")
-        print("   4. 🧠 Preguntas y respuestas")
-        print("   5. 🎭 Historia/conversación educativa")
-        print("   6. 📝 Guía de estudio paso a paso")
-        print("   7. 🔄 Generar todos los tipos")
-        print("   0. Volver al menú principal")
-        print("="*60)
+        print("\n" + "-"*60)
+        print("Generador de audio educativo")
+        print("-"*60)
+        print("Tipos de audio:")
+        print("   1. Resumen narrado")
+        print("   2. Explicación de conceptos")
+        print("   3. Lectura completa")
+        print("   4. Preguntas y respuestas")
+        print("   5. Historia o conversación")
+        print("   6. Guía de estudio")
+        print("   7. Generar todos")
+        print("   0. Volver")
+        print("-"*60)
         
         # Preparar contexto
         context = self._prepare_context(processed_texts)
@@ -87,7 +87,7 @@ class AudioGeneratorTool:
                 elif opcion == "7":
                     self._generate_all_audio_types(context)
                 else:
-                    print("❌ Opción no válida. Selecciona un número del 0 al 7.")
+                    print("Opción no válida. Elige un número del 0 al 7.")
                     
             except KeyboardInterrupt:
                 print("\n👋 Regresando al menú principal...")
@@ -106,7 +106,7 @@ class AudioGeneratorTool:
 
     def _generate_summary_audio(self, context: str) -> None:
         """Genera script de audio para resumen narrado"""
-        print("\n📚 Generando resumen narrado...")
+        print("\nGenerando resumen narrado...")
         
         if not self.ai_available:
             script = self._simulate_summary_script(context)
@@ -140,7 +140,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando resumen: {e}")
+                print(f"Error generando resumen: {e}")
                 script = self._simulate_summary_script(context)
         
         self._save_audio_script("resumen_narrado", script)
@@ -148,7 +148,7 @@ Genera el script completo:
 
     def _generate_concepts_audio(self, context: str) -> None:
         """Genera script de audio para explicación de conceptos"""
-        print("\n🎯 Generando explicación de conceptos...")
+        print("\nGenerando explicación de conceptos...")
         
         if not self.ai_available:
             script = self._simulate_concepts_script(context)
@@ -185,7 +185,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando conceptos: {e}")
+                print(f"Error generando conceptos: {e}")
                 script = self._simulate_concepts_script(context)
         
         self._save_audio_script("explicacion_conceptos", script)
@@ -193,7 +193,7 @@ Genera el script completo:
 
     def _generate_full_reading_audio(self, context: str) -> None:
         """Genera script de audio para lectura completa"""
-        print("\n📖 Generando lectura completa...")
+        print("\nGenerando lectura completa...")
         
         if not self.ai_available:
             script = self._simulate_reading_script(context)
@@ -227,7 +227,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando lectura: {e}")
+                print(f"Error generando lectura: {e}")
                 script = self._simulate_reading_script(context)
         
         self._save_audio_script("lectura_completa", script)
@@ -235,7 +235,7 @@ Genera el script completo:
 
     def _generate_qa_audio(self, context: str) -> None:
         """Genera script de audio de preguntas y respuestas"""
-        print("\n🧠 Generando preguntas y respuestas...")
+        print("\nGenerando preguntas y respuestas...")
         
         if not self.ai_available:
             script = self._simulate_qa_script(context)
@@ -273,7 +273,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando Q&A: {e}")
+                print(f"Error generando Q&A: {e}")
                 script = self._simulate_qa_script(context)
         
         self._save_audio_script("preguntas_respuestas", script)
@@ -281,7 +281,7 @@ Genera el script completo:
 
     def _generate_story_audio(self, context: str) -> None:
         """Genera script de audio como historia/conversación"""
-        print("\n🎭 Generando historia educativa...")
+        print("\nGenerando historia educativa...")
         
         if not self.ai_available:
             script = self._simulate_story_script(context)
@@ -315,7 +315,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando historia: {e}")
+                print(f"Error generando historia: {e}")
                 script = self._simulate_story_script(context)
         
         self._save_audio_script("historia_educativa", script)
@@ -323,7 +323,7 @@ Genera el script completo:
 
     def _generate_study_guide_audio(self, context: str) -> None:
         """Genera script de audio de guía de estudio"""
-        print("\n📝 Generando guía de estudio...")
+        print("\nGenerando guía de estudio...")
         
         if not self.ai_available:
             script = self._simulate_study_guide_script(context)
@@ -362,7 +362,7 @@ Genera el script completo:
                 response = self.model.generate_content(prompt)
                 script = response.text
             except Exception as e:
-                print(f"❌ Error generando guía: {e}")
+                print(f"Error generando guía: {e}")
                 script = self._simulate_study_guide_script(context)
         
         self._save_audio_script("guia_estudio", script)
@@ -370,7 +370,7 @@ Genera el script completo:
 
     def _generate_all_audio_types(self, context: str) -> None:
         """Genera todos los tipos de audio"""
-        print("\n🔄 Generando todos los tipos de audio...")
+        print("\nGenerando todos los tipos de audio...")
         
         audio_types = [
             ("Resumen Narrado", self._generate_summary_audio),
@@ -382,14 +382,14 @@ Genera el script completo:
         ]
         
         for name, generator_func in audio_types:
-            print(f"\n📝 Generando: {name}")
+            print(f"\nGenerando: {name}")
             try:
                 generator_func(context)
-                print(f"✅ {name} generado exitosamente")
+                print(f"{name} generado")
             except Exception as e:
-                print(f"❌ Error generando {name}: {e}")
+                print(f"Error generando {name}: {e}")
         
-        print("\n🎉 ¡Todos los audios han sido generados!")
+        print("\nListo. Todos los audios generados.")
 
     def _save_audio_script(self, filename: str, script: str) -> None:
         """Guarda el script de audio en un archivo"""
@@ -409,18 +409,18 @@ Genera el script completo:
 
     def _display_audio_instructions(self, audio_type: str, script: str) -> None:
         """Muestra instrucciones y opciones para generar audio"""
-        print(f"\n🎵 {audio_type} - Script Generado")
-        print("="*50)
-        print("📋 Script generado:")
+        print(f"\n{audio_type} - Script generado")
+        print("-"*50)
+        print("Script:")
         print("-" * 30)
         print(script[:500] + "..." if len(script) > 500 else script)
         print("-" * 30)
         
-        print("\n🔊 Opciones para generar audio:")
-        print("1. 🎤 Generar audio con Google TTS (gratis)")
-        print("2. 🤖 Generar audio con ElevenLabs (premium)")
-        print("3. 📱 Usar servicios online")
-        print("4. 💾 Solo guardar script")
+        print("\nOpciones para generar audio:")
+        print("1. Generar audio con Google TTS (local)")
+        print("2. Generar audio con ElevenLabs (requiere API)")
+        print("3. Usar servicios online")
+        print("4. Solo guardar el script")
         
         while True:
             try:
@@ -436,7 +436,7 @@ Genera el script completo:
                     self._show_online_services_info()
                     break
                 elif opcion == "4":
-                    print("✅ Script guardado. Puedes convertirlo a audio más tarde.")
+                    print("Script guardado. Puedes convertirlo a audio más tarde.")
                     break
                 else:
                     print("❌ Opción no válida. Selecciona 1-4.")
@@ -694,11 +694,11 @@ Genera el script completo:
 
     def _play_audio_instructions(self, audio_path: str) -> None:
         """Muestra instrucciones y abre el reproductor de consola"""
-        print(f"\n🎧 Audio generado exitosamente!")
-        print(f"📁 Ubicación: {audio_path}")
+        print(f"\nAudio generado.")
+        print(f"Ubicación: {audio_path}")
         
-        print(f"\n🎵 Abriendo reproductor de consola...")
-        print(f"🔊 El audio se reproducirá directamente aquí")
+        print(f"\nAbriendo reproductor en consola...")
+        print(f"El audio se reproducirá aquí mismo")
         
         # Importar y usar el reproductor de consola
         try:
@@ -707,9 +707,9 @@ Genera el script completo:
             
             # Reproducir el archivo específico
             if player.play_audio_file(audio_path):
-                print("✅ Audio reproducido exitosamente")
+                print("Audio reproducido")
             else:
-                print("❌ Error reproduciendo el audio")
+                print("Error reproduciendo el audio")
                 self._show_manual_options(audio_path)
                 
         except Exception as e:
@@ -718,10 +718,10 @@ Genera el script completo:
 
     def _show_manual_options(self, audio_path: str) -> None:
         """Muestra opciones manuales si falla el reproductor automático"""
-        print(f"\n🎵 Opciones alternativas:")
-        print(f"• 🎧 Usa el Reproductor de Audio integrado (Opción 5 del menú)")
-        print(f"• 🖱️ Doble clic en el archivo para abrir con reproductor externo")
-        print(f"• ⌨️ Comando rápido: py -c \"import os; os.startfile('{audio_path}')\"")
+        print(f"\nOpciones alternativas:")
+        print(f"• Usa el Reproductor de Audio (opción 5 del menú)")
+        print(f"• Doble clic en el archivo para abrirlo con tu reproductor")
+        print(f"• Comando rápido: py -c \"import os; os.startfile('{audio_path}')\"")
 
     def _show_online_services_info(self) -> None:
         """Muestra información sobre servicios TTS online"""

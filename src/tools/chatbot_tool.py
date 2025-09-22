@@ -36,21 +36,20 @@ class ChatbotTool:
             print("❌ No hay contenido procesado. Procesa archivos primero.")
             return
         
-        print("\n" + "="*60)
-        print("🤖 CHATBOT DE ESTUDIO - StudyBox AI")
-        print("="*60)
-        print("💡 Puedes preguntar sobre:")
-        print("   • Conceptos específicos del contenido")
-        print("   • Explicaciones más detalladas")
-        print("   • Ejemplos prácticos")
-        print("   • Resúmenes de temas")
-        print("   • Comparaciones entre conceptos")
-        print("\n📝 Comandos especiales:")
-        print("   • 'resumen' - Genera un resumen del contenido")
-        print("   • 'conceptos' - Lista los conceptos principales")
-        print("   • 'ejemplos' - Pide ejemplos del contenido")
-        print("   • 'salir' - Termina la sesión de chat")
-        print("="*60)
+        print("\n" + "-"*60)
+        print("Chat de estudio")
+        print("-"*60)
+        print("Puedes preguntar sobre:")
+        print("   - Conceptos del contenido")
+        print("   - Explicaciones")
+        print("   - Ejemplos")
+        print("   - Resúmenes")
+        print("\nComandos:")
+        print("   - resumen")
+        print("   - conceptos")
+        print("   - ejemplos")
+        print("   - salir")
+        print("-"*60)
         
         context = self._prepare_context(processed_texts)
         self._chat_loop(context)
@@ -67,14 +66,14 @@ class ChatbotTool:
         conversation_history: List[Dict[str, str]] = []
         
         while True:
-            print(f"\n{'─'*50}")
-            user_input: str = input("🧑 Tu pregunta: ").strip()
+            print(f"\n{'-'*50}")
+            user_input: str = input("Tu pregunta: ").strip()
             
             if not user_input:
                 continue
                 
             if user_input.lower() in ['salir', 'exit', 'quit', 'bye']:
-                print("👋 ¡Hasta luego! Regresando al menú principal...")
+                print("Hasta luego. Regresando al menú principal...")
                 break
             
             response: str
@@ -87,7 +86,7 @@ class ChatbotTool:
             else:
                 response = self._generate_response(user_input, context, conversation_history)
             
-            print(f"\n🤖 StudyBox AI:")
+            print(f"\nRespuesta:")
             print(f"{response}")
             
             conversation_history.append({

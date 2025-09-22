@@ -36,11 +36,33 @@ class FileManager:
 
     @staticmethod
     def delete_file(filename: str) -> bool:
-        path: str = os.path.join(FileManager.STORAGE_DIR, filename) 
-        if os.path.exists(path):
-            os.remove(path) 
-            return True 
-        return False
+        try:
+            path: str = os.path.join(FileManager.STORAGE_DIR, filename)
+            
+          
+            if not os.path.exists(path):
+                print(f"⚠️ El archivo '{filename}' no existe en el almacenamiento.")
+                return False
+            
+
+            if not os.path.isfile(path):
+                print(f"⚠️ '{filename}' no es un archivo válido.")
+                return False
+            
+
+            os.remove(path)
+            print(f"🗑️ Archivo '{filename}' eliminado del almacenamiento.")
+            return True
+            
+        except PermissionError:
+            print(f"❌ Error de permisos: No se puede eliminar '{filename}'.")
+            return False
+        except OSError as e:
+            print(f"❌ Error del sistema al eliminar '{filename}': {str(e)}")
+            return False
+        except Exception as e:
+            print(f"❌ Error inesperado al eliminar '{filename}': {str(e)}")
+            return False
 
     @staticmethod 
     def get_file_info(filename: str) -> Optional[dict]:

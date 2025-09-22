@@ -31,27 +31,27 @@ class QuizTool:
 
     def generate_quiz(self, processed_texts: List[str]) -> None:
         """Genera quizzes inteligentes usando IA"""
-        print("\n🎯 GENERADOR DE QUIZ INTELIGENTES - StudyBox")
-        print("="*60)
+        print("\nGenerador de quiz")
+        print("-"*60)
         
         if not processed_texts:
             print("❌ No hay contenido procesado disponible.")
             print("💡 Procesa algunos archivos primero para generar quizzes.")
             return
         
-        print("📚 Contenido disponible para generar quiz:")
+        print("Contenido disponible para el quiz:")
         for i, text in enumerate(processed_texts, 1):
             preview = text[:100] + "..." if len(text) > 100 else text
             print(f"{i}. {preview}")
         
-        print("\n🎯 Opciones de generación:")
-        print("1. Quiz de opción múltiple (IA)")
-        print("2. Quiz de verdadero/falso")
-        print("3. Quiz de completar espacios")
-        print("4. Quiz de preguntas abiertas")
-        print("5. Quiz mixto (combinado)")
-        print("6. Quiz por tema específico")
-        print("0. Volver al menú principal")
+        print("\nOpciones:")
+        print("1. Opción múltiple")
+        print("2. Verdadero/Falso")
+        print("3. Completar espacios")
+        print("4. Preguntas abiertas")
+        print("5. Mixto")
+        print("6. Por tema específico")
+        print("0. Volver")
         
         while True:
             try:
@@ -79,7 +79,7 @@ class QuizTool:
                     self._generate_topic_quiz(processed_texts)
                     break
                 else:
-                    print("❌ Opción inválida. Selecciona 1-6 o 0.")
+                    print("Opción inválida. Selecciona 1-6 o 0.")
                     
             except KeyboardInterrupt:
                 print("\n👋 Regresando al menú principal...")
@@ -89,7 +89,7 @@ class QuizTool:
 
     def _generate_multiple_choice_quiz(self, texts: List[str]) -> None:
         """Genera quiz de opción múltiple usando IA"""
-        print("\n📝 Generando quiz de opción múltiple...")
+        print("\nGenerando quiz de opción múltiple...")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -103,11 +103,11 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, "opcion_multiple")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _generate_true_false_quiz(self, texts: List[str]) -> None:
         """Genera quiz de verdadero/falso"""
-        print("\n✅ Generando quiz de verdadero/falso...")
+        print("\nGenerando quiz de verdadero/falso...")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -121,11 +121,11 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, "verdadero_falso")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _generate_fill_blank_quiz(self, texts: List[str]) -> None:
         """Genera quiz de completar espacios"""
-        print("\n📝 Generando quiz de completar espacios...")
+        print("\nGenerando quiz de completar espacios...")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -139,11 +139,11 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, "completar_espacios")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _generate_open_questions_quiz(self, texts: List[str]) -> None:
         """Genera quiz de preguntas abiertas"""
-        print("\n💭 Generando quiz de preguntas abiertas...")
+        print("\nGenerando quiz de preguntas abiertas...")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -157,11 +157,11 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, "preguntas_abiertas")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _generate_mixed_quiz(self, texts: List[str]) -> None:
         """Genera quiz mixto con diferentes tipos de preguntas"""
-        print("\n🎲 Generando quiz mixto...")
+        print("\nGenerando quiz mixto...")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -175,16 +175,16 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, "mixto")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _generate_topic_quiz(self, texts: List[str]) -> None:
         """Genera quiz sobre un tema específico"""
-        topic = input("\n📝 Ingresa el tema específico para el quiz: ").strip()
+        topic = input("\nTema específico para el quiz: ").strip()
         if not topic:
             print("❌ Tema no válido.")
             return
         
-        print(f"\n🎯 Generando quiz sobre: {topic}")
+        print(f"\nGenerando quiz sobre: {topic}")
         
         num_questions = self._get_quiz_length()
         combined_text = "\n\n".join(texts)
@@ -198,7 +198,7 @@ class QuizTool:
         if quiz:
             self._save_and_display_quiz(quiz, f"tema_{topic.replace(' ', '_')}")
         else:
-            print("❌ No se pudo generar el quiz.")
+            print("No se pudo generar el quiz.")
 
     def _get_quiz_length(self) -> int:
         """Obtiene el número de preguntas para el quiz"""
@@ -389,8 +389,8 @@ class QuizTool:
 
     def _take_quiz_interactive(self, quiz: List[Dict[str, Any]]) -> None:
         """Permite tomar el quiz de forma interactiva"""
-        print(f"\n🎮 TOMANDO QUIZ INTERACTIVO")
-        print("="*50)
+        print(f"\nTomando quiz interactivo")
+        print("-"*50)
         print("📚 Responde las preguntas del quiz")
         print("• Ingresa tu respuesta (A, B, C, D, etc.)")
         print("• Escribe 'salir' para terminar")
@@ -411,7 +411,7 @@ class QuizTool:
             user_answer = input("\nTu respuesta: ").strip().upper()
             
             if user_answer == "SALIR":
-                print("👋 Terminando quiz...")
+                print("Terminando quiz...")
                 break
             
             correct_answer = question['Answer'].upper()

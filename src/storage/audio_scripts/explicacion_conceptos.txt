@@ -1,0 +1,75 @@
+## Script de Audio: Introducción a la Programación Orientada a Objetos (POO)
+
+**(Intro Música ligera y animada, 5 segundos)**
+
+**Locutor:** Hola a todos, y bienvenidos a esta introducción a la Programación Orientada a Objetos, o POO, como se le conoce comúnmente.  Durante los próximos minutos, vamos a desentrañar este importante paradigma de programación de una manera sencilla y amigable.  No se preocupen si nunca han escuchado de POO antes, ¡estamos aquí para aprender juntos!
+
+**(Pausa de 2 segundos)**
+
+**Locutor:**  Imaginen el mundo a su alrededor.  Está lleno de objetos: carros, casas, árboles, incluso ustedes mismos.  La POO se basa en esta misma idea:  todo se modela como **objetos**. Pero, ¿qué es exactamente un objeto en programación?
+
+**(Concepto 1: Objetos)**
+
+**Locutor:** Un objeto en programación es como una plantilla para representar algo del mundo real.  Tiene tres características principales: **Propiedades**, **Comportamiento** e **Identidad**.
+
+**(Pausa de 1 segundo)**
+
+**Locutor:** Piensen en un coche.  Sus **propiedades** serían su color, marca, modelo, número de puertas.  Su **comportamiento** sería acelerar, frenar, encender las luces.  Y su **identidad** es lo que lo diferencia de otro coche, incluso si ambos son rojos y de la misma marca; su número de serie, por ejemplo.
+
+**(Pausa de 1 segundo)**
+
+**Locutor:**  En programación, las propiedades se llaman **atributos**, y el comportamiento se representa mediante **métodos**.  Cada objeto, incluso si es idéntico en propiedades y comportamiento a otro, posee una identidad única que lo distingue. ¡Como las huellas dactilares!
+
+**(Pausa de 2 segundos)**
+
+**(Concepto 2: Principios Fundamentales de la POO)**
+
+**Locutor:** Ahora que sabemos qué es un objeto, veamos los principios que rigen la POO.  Son cuatro pilares fundamentales: **Encapsulación, Herencia, Polimorfismo y Abstracción.**
+
+**(Pausa de 1 segundo)**
+
+**(Encapsulación)**
+
+**Locutor:** La **encapsulación** es como una caja negra. Oculta los detalles internos de un objeto, mostrando solo lo necesario al exterior. Si piensan en un auto, no necesitan saber cómo funciona el motor internamente para conducirlo.  Solo interactúan con los pedales, el volante y las luces. ¡Eso es encapsulación! Protege los datos internos y simplifica el mantenimiento.
+
+**(Pausa de 1 segundo)**
+
+**(Herencia)**
+
+**Locutor:** La **herencia** es como copiar y pegar con mejoras.  Permite crear nuevos objetos basados en otros existentes.  Imaginen un coche deportivo y un coche familiar.  Ambos comparten características (ruedas, motor, volante), pero el deportivo tiene atributos adicionales (mayor velocidad, diseño aerodinámico). El deportivo "hereda" las características del coche base y añade sus propias.
+
+**(Pausa de 1 segundo)**
+
+**(Polimorfismo)**
+
+**Locutor:**  El **polimorfismo** significa "muchas formas".  Significa que diferentes objetos pueden responder de manera diferente a la misma acción. Por ejemplo, si le decimos "mover" a un coche, se moverá sobre ruedas. Si le decimos "mover" a un avión, volará.  ¡La misma acción, diferentes resultados!
+
+**(Pausa de 1 segundo)**
+
+**(Abstracción)**
+
+**Locutor:** La **abstracción** es simplificar.  Se centra en lo esencial, ignorando detalles innecesarios. Al programar un juego de ajedrez, no necesitamos modelar el peso o el color de las piezas, sólo sus movimientos y reglas. Nos enfocamos en lo importante.
+
+**(Pausa de 2 segundos)**
+
+**(Repaso)**
+
+**Locutor:**  Antes de seguir, un pequeño repaso:  Un objeto tiene **propiedades (atributos)** y **comportamiento (métodos)**, y una **identidad única**.  Los principios de POO son: **Encapsulación, Herencia, Polimorfismo y Abstracción**. ¿Lo recuerdan?
+
+**(Pausa de 2 segundos)**
+
+**(Ejemplo en Python)**
+
+**Locutor:** Veamos un ejemplo sencillo en Python:  una clase `Estudiante` con atributos `nombre` y `edad`, y un método `estudiar`.  (se lee el código Python lentamente y se explica cada linea)
+
+**(Pausa de 2 segundos)**
+
+**(Beneficios de la POO)**
+
+**Locutor:** La POO ofrece muchos beneficios, incluyendo la **reutilización de código**, el **mantenimiento más sencillo**, y la **facilidad para trabajar en equipos grandes**.
+
+**(Conclusión)**
+
+**Locutor:**  Hemos explorado los conceptos básicos de la POO. Recuerden que la práctica es clave para dominar estos conceptos. ¡No duden en buscar más información y practicar!  Gracias por escuchar.
+
+**(Música de cierre, 5 segundos)**

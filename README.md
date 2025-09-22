@@ -1,143 +1,142 @@
-# 📚 StudyBox  
-*A complete system for studying — by students, for students.*
+# StudyBox
+Una herramienta sencilla para estudiar mejor con tus propios materiales.
 
 ---
 
-## ✨ Overview  
-StudyBox is an **interactive study application** designed to help students learn more effectively using only the materials they upload.  
-Instead of relying on external sources, the app transforms **text, audio, and other formats** into customized learning tools:  
-- Summaries  
-- Diagrams  
-- Flashcards  
-- Quizzes & Exams  
-
-Our goal is simple: make studying **personalized, verifiable, and collaborative**.
+## ¿Qué hace?
+Tomas tus archivos (texto o audio) y los conviertes en herramientas de estudio:
+- Resúmenes
+- Flashcards
+- Quizzes
+- Conceptos clave
+- Audio narrado
 
 ---
 
-## 🚀 Features (MVP)  
-- 📂 Upload multiple file types (PDF, DOCX, TXT, JSON, CSV, audio).  
-- 📝 Automatic text extraction & transcription with AI.  
-- 🤖 Interactive chatbot for Q&A about your content.  
-- 🎵 Audio generation for different study formats.  
-- 📑 Summaries at different levels of detail.  
-- 🃏 Flashcards and question generators (with traceability to source text).  
-- 🎯 Key concepts extraction.  
-- 🔒 Privacy first: your files stay private by default.  
+## Funciones principales
+- 📂 Soporte para TXT, MD, PY, JSON, CSV y audio (MP3/WAV)
+- 📝 Extracción y limpieza de texto
+- 🤖 Chat para preguntas sobre tu propio contenido
+- 🎵 Generación de scripts y audio local
+- 🃏 Flashcards automáticas
+- 🎯 Conceptos clave
 
 ---
 
-## 🛠️ Tech Stack  
-- **Backend:** Python 3.13+  
-- **AI Integration:** Google Gemini API  
-- **Text-to-Speech:** pyttsx3 (local), ElevenLabs (premium)  
-- **File Processing:** Custom processors for multiple formats  
-- **Storage:** Local file system with organized structure  
+## Tecnologías
+- Frontend: Next.js + TypeScript (web)
+- Backend: FastAPI (opcional para web)
+- CLI: Python 3.13+
+- IA: Google Gemini (opcional)
+- TTS: pyttsx3 (local) y ElevenLabs (opcional)
 
 ---
 
-## 📦 Installation & Setup
+## Instalación rápida
+Requisitos:
+- Python 3.13+
+- Node.js 18+ (solo si usarás el frontend)
 
-### Prerequisites
-- Python 3.13+ installed
-- Google Gemini API key (optional but recommended)
-
-### Quick Start
-
-#### Windows:
+Windows:
 ```bash
-# Clone the repository
 git clone <repository-url>
 cd proyecto-aula-apoo
-
-# Install dependencies automatically
 install_requirements.bat
-
-# Or install manually
+# o manual
 py -m pip install -r requirements.txt
 ```
 
-#### Linux/Mac:
+Linux/Mac:
 ```bash
-# Clone the repository
 git clone <repository-url>
 cd proyecto-aula-apoo
-
-# Install dependencies automatically
 chmod +x install_requirements.sh
 ./install_requirements.sh
-
-# Or install manually
+# o manual
 python3 -m pip install -r requirements.txt
 ```
 
-### Configuration
-1. Create a `.env` file in the root directory:
+### Configuración
+1. Crea un archivo `.env` en la raíz:
 ```env
 GEMINI_API_KEY=tu_api_key_aqui
 ELEVENLABS_API_KEY=tu_api_key_aqui  # Optional for premium audio
 ```
 
-2. Get your Gemini API key:
-   - Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
-   - Create a new API key
-   - Add it to your `.env` file
+2. Para la API de Gemini:
+   - Ve a Google AI Studio y crea tu API key
+   - Agrégala al `.env`
 
-### Running StudyBox
+### Ejecución
+
+Opción 1: CLI
 ```bash
-# Windows
 py main.py
-
-# Linux/Mac
 python3 main.py
 ```
 
----
+Opción 2: Web (Frontend + Backend)
+```bash
+cd backend
+python run_server.py
 
-## 🧩 Architecture (High Level)  
-- **Ingestor** → Extracts text from files (OCR/ASR).  
-- **Processors** → Generate summaries, flashcards, quizzes.  
-- **Outputs** → Stored with source traceability.  
-- **Frontend** → Intuitive dashboard for managing study projects.  
+cd studybox-frontend
+npm run dev
+```
 
----
-
-## 👥 Team  
-This project is developed by three students:  
-- **José Manuel Jaramillo**  
-- **Samuel Romaña**  
-- **Nicolás Peña**  
+**Acceso:**
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+- Documentación API: http://localhost:8000/docs
 
 ---
 
-## 📌 Roadmap  
-- [x] File upload & text extraction  
-- [x] AI-powered content processing  
-- [x] Interactive chatbot for Q&A  
-- [x] Audio generation (multiple formats)  
-- [x] Key concepts extraction  
-- [x] Summaries (short / medium / detailed)  
-- [x] Flashcard generator (enhanced)  
-- [x] Quiz/exam generator (enhanced)  
-- [ ] Export options (PDF, CSV, Anki)  
-- [ ] Collaborative study mode  
-- [ ] Web interface  
-- [ ] Mobile app  
+## Arquitectura (resumen)
+- Ingesta → extrae texto
+- Procesado → limpieza y mejoras
+- Salidas → resúmenes, flashcards, quiz, audio
+- Web → interfaz Next.js (opcional)
 
 ---
 
-## 🤝 Contributing  
-We welcome contributions!  
-1. Fork the repository  
-2. Create your feature branch (`git checkout -b feature/new-feature`)  
-3. Commit your changes (`git commit -m 'Add new feature'`)  
-4. Push to the branch (`git push origin feature/new-feature`)  
-5. Open a Pull Request  
+## Equipo
+Proyecto desarrollado por:
+- José Manuel Jaramillo
+- Samuel Romaña
+- Nicolás Peña
 
 ---
 
-## 📜 License  
-This project is licensed under the **MIT License**.  
-See [LICENSE](./LICENSE) for details.  
+## Roadmap
+- [x] Subida de archivos y extracción
+- [x] Procesamiento con IA
+- [x] Chat de preguntas
+- [x] Generación de audio
+- [x] Conceptos clave
+- [x] Resúmenes
+- [x] Flashcards
+- [x] Quizzes
+- [x] Interfaz web
+- [ ] Exportación (PDF, CSV, Anki)
+- [ ] Modo colaborativo
+- [ ] App móvil
+- [ ] Chat en tiempo real
+- [ ] Drag & drop de archivos
+- [ ] Dashboard de progreso
+
+---
+
+## Contribuciones
+¡Bienvenidas!
+1. Haz fork
+2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
+3. Commit
+4. Push
+5. Abre un Pull Request
+
+---
+
+## Licencia
+MIT. Ver [LICENSE](./LICENSE).
 
 ---

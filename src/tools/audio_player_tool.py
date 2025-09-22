@@ -16,7 +16,7 @@ class AudioPlayerTool:
         try:
             pygame.mixer.init(frequency=22050, size=-16, channels=2, buffer=512)
             self.pygame_initialized = True
-            print("✅ Reproductor de audio inicializado")
+            print("Reproductor de audio listo")
         except Exception as e:
             print(f"⚠️ Error inicializando reproductor: {e}")
             self.pygame_initialized = False
@@ -24,7 +24,7 @@ class AudioPlayerTool:
     def play_audio_file(self, file_path: str) -> bool:
         """Reproduce un archivo de audio"""
         if not self.pygame_initialized:
-            print("❌ Reproductor no disponible. Instalando pygame...")
+            print("Reproductor no disponible. Instalando pygame...")
             return self._install_and_retry(file_path)
         
         if not os.path.exists(file_path):
@@ -36,8 +36,8 @@ class AudioPlayerTool:
             if self.is_playing:
                 self.stop_audio()
             
-            print(f"🎵 Cargando audio: {os.path.basename(file_path)}")
-            print("🔊 Iniciando reproducción directa en consola...")
+            print(f"Cargando: {os.path.basename(file_path)}")
+            print("Reproduciendo en consola...")
             
             # Cargar y reproducir archivo
             pygame.mixer.music.load(file_path)
@@ -78,11 +78,11 @@ class AudioPlayerTool:
 
     def _show_playback_controls(self) -> None:
         """Muestra controles de reproducción y reproduce directamente en consola"""
-        print("\n🎧 Reproduciendo directamente en consola...")
-        print("• Presiona ENTER para pausar/reanudar")
-        print("• Presiona 's' + ENTER para detener")
-        print("• Presiona 'q' + ENTER para salir")
-        print("• 🔊 Audio reproduciéndose ahora...")
+        print("\nReproducción en consola")
+        print("• ENTER: pausar/reanudar")
+        print("• s + ENTER: detener")
+        print("• q + ENTER: salir")
+        print("• Reproduciendo...")
         
         # Hilo para monitorear controles
         control_thread = threading.Thread(target=self._monitor_controls)
@@ -93,7 +93,7 @@ class AudioPlayerTool:
         self._show_playback_progress()
         
         if self.is_playing:
-            print("✅ Reproducción completada")
+            print("Reproducción completada")
             self.is_playing = False
 
     def _show_playback_progress(self) -> None:
@@ -102,7 +102,7 @@ class AudioPlayerTool:
         
         while self.is_playing and pygame.mixer.music.get_busy():
             elapsed = int(time.time() - start_time)
-            print(f"\r🔊 Reproduciendo... {elapsed}s", end="", flush=True)
+            print(f"\rReproduciendo... {elapsed}s", end="", flush=True)
             time.sleep(1)
         
         print()  # Nueva línea al final

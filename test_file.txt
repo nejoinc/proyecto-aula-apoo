@@ -1,0 +1,11 @@
+Este es un archivo de prueba para StudyBox.
+
+Contenido del archivo:
+- Tema: Programación Orientada a Objetos
+- Conceptos: Clases, Objetos, Herencia, Polimorfismo
+- Ejemplos: Python, Java, C++
+
+Este archivo será usado para probar la funcionalidad de subida de archivos y procesamiento con IA.
+
+
+

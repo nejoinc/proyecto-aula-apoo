@@ -30,26 +30,26 @@ class FlashcardTool:
 
     def generate_flashcards(self, processed_texts: List[str]) -> None:
         """Genera flashcards inteligentes usando IA"""
-        print("\n🃏 GENERADOR DE FLASHCARDS INTELIGENTES - StudyBox")
-        print("="*60)
+        print("\nGenerador de flashcards")
+        print("-"*60)
         
         if not processed_texts:
             print("❌ No hay contenido procesado disponible.")
             print("💡 Procesa algunos archivos primero para generar flashcards.")
             return
         
-        print("📚 Contenido disponible para generar flashcards:")
+        print("Contenido disponible para generar flashcards:")
         for i, text in enumerate(processed_texts, 1):
             preview = text[:100] + "..." if len(text) > 100 else text
             print(f"{i}. {preview}")
         
-        print("\n🎯 Opciones de generación:")
-        print("1. Generar flashcards automáticas (IA)")
-        print("2. Generar flashcards por tema específico")
-        print("3. Generar flashcards de conceptos clave")
-        print("4. Generar flashcards de definiciones")
-        print("5. Generar flashcards de ejemplos")
-        print("0. Volver al menú principal")
+        print("\nOpciones:")
+        print("1. Automáticas")
+        print("2. Por tema")
+        print("3. Conceptos clave")
+        print("4. Definiciones")
+        print("5. Ejemplos")
+        print("0. Volver")
         
         while True:
             try:
@@ -74,7 +74,7 @@ class FlashcardTool:
                     self._generate_example_flashcards(processed_texts)
                     break
                 else:
-                    print("❌ Opción inválida. Selecciona 1-5 o 0.")
+                    print("Opción inválida. Selecciona 1-5 o 0.")
                     
             except KeyboardInterrupt:
                 print("\n👋 Regresando al menú principal...")
@@ -84,7 +84,7 @@ class FlashcardTool:
 
     def _generate_automatic_flashcards(self, texts: List[str]) -> None:
         """Genera flashcards automáticamente usando IA"""
-        print("\n🤖 Generando flashcards automáticas con IA...")
+        print("\nGenerando flashcards automáticas...")
         
         combined_text = "\n\n".join(texts)
         context = combined_text[:8000]  # Limitar contexto
@@ -97,16 +97,16 @@ class FlashcardTool:
         if flashcards:
             self._save_and_display_flashcards(flashcards, "automaticas")
         else:
-            print("❌ No se pudieron generar flashcards.")
+            print("No se pudieron generar flashcards.")
 
     def _generate_topic_flashcards(self, texts: List[str]) -> None:
         """Genera flashcards sobre un tema específico"""
-        topic = input("\n📝 Ingresa el tema específico para las flashcards: ").strip()
+        topic = input("\nTema específico para las flashcards: ").strip()
         if not topic:
             print("❌ Tema no válido.")
             return
         
-        print(f"\n🎯 Generando flashcards sobre: {topic}")
+        print(f"\nGenerando flashcards sobre: {topic}")
         
         combined_text = "\n\n".join(texts)
         context = combined_text[:8000]
@@ -119,11 +119,11 @@ class FlashcardTool:
         if flashcards:
             self._save_and_display_flashcards(flashcards, f"tema_{topic.replace(' ', '_')}")
         else:
-            print("❌ No se pudieron generar flashcards.")
+            print("No se pudieron generar flashcards.")
 
     def _generate_concept_flashcards(self, texts: List[str]) -> None:
         """Genera flashcards de conceptos clave"""
-        print("\n🔑 Generando flashcards de conceptos clave...")
+        print("\nGenerando flashcards de conceptos clave...")
         
         combined_text = "\n\n".join(texts)
         context = combined_text[:8000]
@@ -136,11 +136,11 @@ class FlashcardTool:
         if flashcards:
             self._save_and_display_flashcards(flashcards, "conceptos")
         else:
-            print("❌ No se pudieron generar flashcards.")
+            print("No se pudieron generar flashcards.")
 
     def _generate_definition_flashcards(self, texts: List[str]) -> None:
         """Genera flashcards de definiciones"""
-        print("\n📖 Generando flashcards de definiciones...")
+        print("\nGenerando flashcards de definiciones...")
         
         combined_text = "\n\n".join(texts)
         context = combined_text[:8000]
@@ -153,11 +153,11 @@ class FlashcardTool:
         if flashcards:
             self._save_and_display_flashcards(flashcards, "definiciones")
         else:
-            print("❌ No se pudieron generar flashcards.")
+            print("No se pudieron generar flashcards.")
 
     def _generate_example_flashcards(self, texts: List[str]) -> None:
         """Genera flashcards de ejemplos"""
-        print("\n💡 Generando flashcards de ejemplos...")
+        print("\nGenerando flashcards de ejemplos...")
         
         combined_text = "\n\n".join(texts)
         context = combined_text[:8000]
@@ -170,7 +170,7 @@ class FlashcardTool:
         if flashcards:
             self._save_and_display_flashcards(flashcards, "ejemplos")
         else:
-            print("❌ No se pudieron generar flashcards.")
+            print("No se pudieron generar flashcards.")
 
     def _generate_ai_flashcards(self, text: str, prompt_type: str) -> List[Dict[str, str]]:
         """Genera flashcards usando IA"""
@@ -229,7 +229,7 @@ class FlashcardTool:
 
     def _generate_simple_flashcards(self, text: str, topic: str = "") -> List[Dict[str, str]]:
         """Genera flashcards simples como fallback"""
-        print("📝 Generando flashcards básicas...")
+        print("Generando flashcards básicas...")
         
         # Dividir texto en oraciones
         sentences = [s.strip() for s in text.split('.') if s.strip()]
@@ -274,8 +274,8 @@ class FlashcardTool:
             print(f"❌ Error guardando flashcards: {e}")
         
         # Mostrar flashcards
-        print(f"\n🃏 FLASHCARDS GENERADAS ({len(flashcards)} tarjetas):")
-        print("="*60)
+        print(f"\nFlashcards generadas ({len(flashcards)}):")
+        print("-"*60)
         
         for i, card in enumerate(flashcards, 1):
             print(f"\n📋 Flashcard {i}:")
@@ -288,7 +288,7 @@ class FlashcardTool:
 
     def _show_flashcard_options(self, filepath: str, flashcards: List[Dict[str, str]]) -> None:
         """Muestra opciones adicionales para las flashcards"""
-        print(f"\n🎯 OPCIONES ADICIONALES:")
+        print(f"\nOpciones:")
         print("1. 🔄 Generar más flashcards")
         print("2. 📝 Modificar flashcards existentes")
         print("3. 🎮 Modo estudio interactivo")
@@ -300,7 +300,7 @@ class FlashcardTool:
                 choice = input("\nSelecciona opción: ").strip()
                 
                 if choice == "0":
-                    print("✅ Generación de flashcards completada.")
+                    print("Listo.")
                     break
                 elif choice == "1":
                     print("🔄 Redirigiendo a generación de más flashcards...")
@@ -325,7 +325,7 @@ class FlashcardTool:
 
     def _modify_flashcards(self, filepath: str, flashcards: List[Dict[str, str]]) -> None:
         """Permite modificar flashcards existentes"""
-        print(f"\n📝 MODIFICAR FLASHCARDS:")
+        print(f"\nModificar flashcards:")
         print("Selecciona la flashcard a modificar (número) o '0' para cancelar:")
         
         for i, card in enumerate(flashcards, 1):
@@ -351,7 +351,7 @@ class FlashcardTool:
                 with open(filepath, 'w', encoding='utf-8') as f:
                     json.dump(flashcards, f, ensure_ascii=False, indent=2)
                 
-                print("✅ Flashcard modificada y guardada.")
+                print("Flashcard modificada y guardada.")
             else:
                 print("❌ Número inválido.")
         except ValueError:
@@ -361,8 +361,8 @@ class FlashcardTool:
 
     def _interactive_study_mode(self, flashcards: List[Dict[str, str]]) -> None:
         """Modo de estudio interactivo"""
-        print(f"\n🎮 MODO ESTUDIO INTERACTIVO")
-        print("="*50)
+        print(f"\nModo estudio interactivo")
+        print("-"*50)
         print("📚 Estudia tus flashcards de forma interactiva")
         print("• Presiona Enter para ver la respuesta")
         print("• Escribe 'siguiente' para pasar a la siguiente")
@@ -379,7 +379,7 @@ class FlashcardTool:
             user_input = input("\nPresiona Enter para ver la respuesta: ").strip().lower()
             
             if user_input == "salir":
-                print("👋 Terminando sesión de estudio...")
+                print("Terminando sesión de estudio...")
                 break
             elif user_input == "siguiente":
                 continue
@@ -391,31 +391,31 @@ class FlashcardTool:
                 correct = input("\n¿Respondiste correctamente? (s/n): ").strip().lower()
                 if correct in ['s', 'si', 'sí', 'y', 'yes']:
                     correct_answers += 1
-                    print("🎉 ¡Correcto!")
+                    print("Correcto")
                     break
                 elif correct in ['n', 'no']:
-                    print("📚 Sigue estudiando esta tarjeta.")
+                    print("Sigue practicando esta tarjeta.")
                     break
                 else:
-                    print("❌ Responde 's' o 'n'.")
+                    print("Responde 's' o 'n'.")
         
         # Mostrar resultados
         if total_questions > 0:
             percentage = (correct_answers / total_questions) * 100
-            print(f"\n📊 RESULTADOS DEL ESTUDIO:")
+            print(f"\nResultados del estudio:")
             print(f"✅ Respuestas correctas: {correct_answers}/{total_questions}")
             print(f"📈 Porcentaje: {percentage:.1f}%")
             
             if percentage >= 80:
-                print("🏆 ¡Excelente trabajo!")
+                print("Excelente trabajo!")
             elif percentage >= 60:
-                print("👍 Buen trabajo, sigue practicando.")
+                print("Bien, sigue practicando.")
             else:
-                print("📚 Necesitas repasar más. ¡Sigue estudiando!")
+                print("Necesitas repasar más. ¡Ánimo!")
 
     def _export_flashcards(self, filepath: str, flashcards: List[Dict[str, str]]) -> None:
         """Exporta flashcards en diferentes formatos"""
-        print(f"\n📤 EXPORTAR FLASHCARDS:")
+        print(f"\nExportar flashcards:")
         print("1. 📄 Exportar como texto plano")
         print("2. 📊 Exportar como CSV")
         print("3. 📋 Copiar al portapapeles")
@@ -431,7 +431,7 @@ class FlashcardTool:
             elif choice == "3":
                 self._copy_to_clipboard(flashcards)
             elif choice == "0":
-                print("❌ Exportación cancelada.")
+                print("Exportación cancelada.")
             else:
                 print("❌ Opción inválida.")
                 
@@ -456,7 +456,7 @@ class FlashcardTool:
                     f.write(f"✅ Respuesta: {card['A']}\n")
                     f.write("-" * 40 + "\n\n")
             
-            print(f"✅ Flashcards exportadas como texto: {filepath}")
+            print(f"Flashcards exportadas como texto: {filepath}")
         except Exception as e:
             print(f"❌ Error exportando como texto: {e}")
 
@@ -476,7 +476,7 @@ class FlashcardTool:
                 for card in flashcards:
                     writer.writerow([card['Q'], card['A']])
             
-            print(f"✅ Flashcards exportadas como CSV: {filepath}")
+            print(f"Flashcards exportadas como CSV: {filepath}")
         except Exception as e:
             print(f"❌ Error exportando como CSV: {e}")
 
@@ -490,7 +490,7 @@ class FlashcardTool:
                 text += f"{i}. {card['Q']}\n   Respuesta: {card['A']}\n\n"
             
             pyperclip.copy(text)
-            print("✅ Flashcards copiadas al portapapeles.")
+            print("Flashcards copiadas al portapapeles.")
         except ImportError:
             print("❌ pyperclip no está instalado. Instálalo con: pip install pyperclip")
         except Exception as e:
@@ -498,8 +498,8 @@ class FlashcardTool:
 
     def list_saved_flashcards(self) -> None:
         """Lista todas las flashcards guardadas"""
-        print("\n📚 FLASHCARDS GUARDADAS:")
-        print("="*40)
+        print("\nFlashcards guardadas:")
+        print("-"*40)
         
         if not os.path.exists(self.storage_dir):
             print("❌ No hay flashcards guardadas.")

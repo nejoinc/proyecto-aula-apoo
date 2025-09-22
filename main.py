@@ -1,8 +1,19 @@
+"""
+Aplicación de consola StudyBox
+
+Este módulo ofrece el menú principal y orquesta las acciones de la app
+de estudio: subir, procesar, eliminar y explorar archivos, además de
+utilidades como chatbot, audio, flashcards y quizzes.
+
+Nota: Se mantiene la compatibilidad total de nombres y firmas.
+"""
+
 from src.app import StudyBoxApp
 from src.file_manager import FileManager
 from typing import List
 
 def menu() -> None:
+    """Muestra el menú principal de StudyBox con un formato amigable."""
     print("\n=== 📚 StudyBox - Menú Principal ===")
     print("1. Subir archivo")
     print("2. Procesar archivos")
@@ -23,10 +34,10 @@ if __name__ == "__main__":
 
     while True:
         menu()
-        opcion: str = input("Seleccione una opción: ")
+        opcion: str = input("Seleccione una opción (0-12): ")
 
         if opcion == "1":
-            archivo: str = input("Ingrese la ruta del archivo: ")
+            archivo: str = input("Ingrese la ruta del archivo (por ejemplo C:/ruta/archivo.txt): ")
             app.upload_file(archivo)
 
         elif opcion == "2":
@@ -40,15 +51,20 @@ if __name__ == "__main__":
                     print(" -", f)
             else:
                 print("⚠️ No hay archivos guardados todavía.")
+                continue
 
-            Eliminacion_Archivo: str = input("Ingrese el archivo que quiere eliminar: ")
+            Delete_File: str = input("Ingrese el archivo que quiere eliminar: ")
 
-            if Eliminacion_Archivo in archivos:
-                archivos.remove(Eliminacion_Archivo)
-                print(f"✅ El archivo '{Eliminacion_Archivo}' fue eliminado de la lista.")
-                FileManager.delete_file(Eliminacion_Archivo)
+            if Delete_File in archivos:
+                try:
+                    if FileManager.delete_file(Delete_File):
+                        print(f"✅ El archivo '{Delete_File}' fue eliminado exitosamente.")
+                    else:
+                        print(f"❌ Error: No se pudo eliminar el archivo '{Delete_File}'.")
+                except Exception as e:
+                    print(f"❌ Error al eliminar el archivo '{Delete_File}': {str(e)}")
             else:
-                print(f"⚠️ El archivo '{Eliminacion_Archivo}' no existe en la lista.")
+                print(f"⚠️ El archivo '{Delete_File}' no existe en la lista.")
 
 
 
