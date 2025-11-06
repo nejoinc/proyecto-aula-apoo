@@ -14,7 +14,26 @@ class QuizTool:
             api_key = os.getenv('GEMINI_API_KEY')
             if api_key and api_key != 'tu_api_key_aqui':
                 genai.configure(api_key=api_key)
-                self.model = genai.GenerativeModel('gemini-1.5-flash')
+                # Intentar con diferentes modelos disponibles
+                model_names = [
+                    'models/gemini-flash-latest',      # Alias al más reciente
+                    'models/gemini-2.5-flash',         # Gemini 2.5 Flash
+                    'models/gemini-2.0-flash',         # Gemini 2.0 Flash
+                    'models/gemini-pro-latest',        # Pro más reciente
+                    'models/gemini-2.5-pro'            # Gemini 2.5 Pro
+                ]
+                self.model = None
+                
+                for model_name in model_names:
+                    try:
+                        self.model = genai.GenerativeModel(model_name)
+                        print(f"✅ Quiz Tool usando: {model_name}")
+                        break
+                    except Exception:
+                        continue
+                
+                if not self.model:
+                    self.model = genai.GenerativeModel('gemini-pro')  # Fallback
                 self.ai_available = True
             else:
                 self.model = None

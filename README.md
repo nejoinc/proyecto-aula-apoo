@@ -14,28 +14,28 @@ Tomas tus archivos (texto o audio) y los conviertes en herramientas de estudio:
 ---
 
 ## Funciones principales
-- 📂 Soporte para TXT, MD, PY, JSON, CSV y audio (MP3/WAV)
-- 📝 Extracción y limpieza de texto
-- 🤖 Chat para preguntas sobre tu propio contenido
-- 🎵 Generación de scripts y audio local
-- 🃏 Flashcards automáticas
-- 🎯 Conceptos clave
+- 📂 Soporte para TXT, PDF, DOCX, MD, PY, JSON, CSV y audio (MP3/WAV)
+- 📝 Extracción y limpieza de texto con IA
+- 🤖 Chatbot inteligente para preguntas sobre tu contenido
+- 🎵 Generación de audio TTS (local)
+- 🃏 Flashcards automáticas con IA
+- 🎯 Extracción de conceptos clave
+- 💻 **2 interfaces disponibles: CLI y GUI Desktop**
 
 ---
 
 ## Tecnologías
-- Frontend: Next.js + TypeScript (web)
-- Backend: FastAPI (opcional para web)
-- CLI: Python 3.13+
-- IA: Google Gemini (opcional)
-- TTS: pyttsx3 (local) y ElevenLabs (opcional)
+- **GUI Desktop**: Tkinter (interfaz gráfica de escritorio)
+- **CLI**: Python 3.8+
+- **IA**: Google Gemini API (opcional, funciona en modo simulado sin ella)
+- **TTS**: pyttsx3 (local)
+- **Procesamiento**: pdfplumber, python-docx, SpeechRecognition
 
 ---
 
 ## Instalación rápida
 Requisitos:
 - Python 3.13+
-- Node.js 18+ (solo si usarás el frontend)
 
 Windows:
 ```bash
@@ -69,25 +69,32 @@ ELEVENLABS_API_KEY=tu_api_key_aqui  # Optional for premium audio
 
 ### Ejecución
 
-Opción 1: CLI
+#### Opción 1: Interfaz Gráfica (GUI) ⭐ RECOMENDADO
 ```bash
+# Windows
+py main_gui.py
+
+# Linux/Mac
+python3 main_gui.py
+```
+
+La interfaz gráfica incluye todas las funcionalidades en una ventana moderna e intuitiva:
+- 📤 Subir archivos con diálogo visual
+- ⚙️ Procesar archivos con selección múltiple
+- 🗑️ Gestión de archivos
+- 🤖 Chatbot interactivo en ventana de chat
+- 🃏 Generador de flashcards con vista previa
+- 🎯 Quiz y otras herramientas de estudio
+- 💡 Extracción de conceptos clave
+
+#### Opción 2: Interfaz de Consola (CLI)
+```bash
+# Windows
 py main.py
+
+# Linux/Mac
 python3 main.py
 ```
-
-Opción 2: Web (Frontend + Backend)
-```bash
-cd backend
-python run_server.py
-
-cd studybox-frontend
-npm run dev
-```
-
-**Acceso:**
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- Documentación API: http://localhost:8000/docs
 
 ---
 
@@ -95,7 +102,7 @@ npm run dev
 - Ingesta → extrae texto
 - Procesado → limpieza y mejoras
 - Salidas → resúmenes, flashcards, quiz, audio
-- Web → interfaz Next.js (opcional)
+- GUI → interfaz Tkinter moderna (opcional)
 
 ---
 
@@ -116,11 +123,10 @@ Proyecto desarrollado por:
 - [x] Resúmenes
 - [x] Flashcards
 - [x] Quizzes
-- [x] Interfaz web
+- [x] **Interfaz gráfica de escritorio (GUI)**
 - [ ] Exportación (PDF, CSV, Anki)
 - [ ] Modo colaborativo
 - [ ] App móvil
-- [ ] Chat en tiempo real
 - [ ] Drag & drop de archivos
 - [ ] Dashboard de progreso
 

@@ -15,8 +15,14 @@ class ContentProcessor:
             if api_key and api_key != 'tu_api_key_aqui':
                 genai.configure(api_key=api_key)
                 
-                # Intentar con diferentes modelos disponibles
-                model_names: List[str] = ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']
+                # Intentar con diferentes modelos disponibles (orden de preferencia)
+                model_names: List[str] = [
+                    'models/gemini-flash-latest',      # Alias al más reciente
+                    'models/gemini-2.5-flash',         # Gemini 2.5 Flash
+                    'models/gemini-2.0-flash',         # Gemini 2.0 Flash
+                    'models/gemini-pro-latest',        # Pro más reciente
+                    'models/gemini-2.5-pro'            # Gemini 2.5 Pro
+                ]
                 self.model: Optional[Any] = None
                 
                 for model_name in model_names:
