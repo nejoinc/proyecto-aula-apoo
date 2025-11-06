@@ -1,6 +1,5 @@
 import google.generativeai as genai
 import os
-from typing import List, Dict, Any
 
 class ChatbotTool:
     
@@ -11,35 +10,35 @@ class ChatbotTool:
                 genai.configure(api_key=api_key)
                 
                 model_names = [
-                    'models/gemini-flash-latest',      # Alias al más reciente
-                    'models/gemini-2.5-flash',         # Gemini 2.5 Flash
-                    'models/gemini-2.0-flash',         # Gemini 2.0 Flash
-                    'models/gemini-pro-latest',        # Pro más reciente
-                    'models/gemini-2.5-pro'            # Gemini 2.5 Pro
+                    'models/gemini-flash-latest',
+                    'models/gemini-2.5-flash',
+                    'models/gemini-2.0-flash',
+                    'models/gemini-pro-latest',
+                    'models/gemini-2.5-pro'
                 ]
                 self.model = None
                 
                 for model_name in model_names:
                     try:
                         self.model = genai.GenerativeModel(model_name)
-                        print(f"✅ Chatbot configurado con modelo: {model_name}")
+                        print(f"Chatbot configurado con modelo: {model_name}")
                         break
-                    except Exception as model_error:
+                    except:
                         continue
                 
                 self.ai_available = bool(self.model)
             else:
                 self.model = None
                 self.ai_available = False
-                print("⚠️ API key no configurada. Chatbot funcionará en modo simulado.")
-        except Exception as e:
-            print(f"⚠️ Error configurando chatbot: {e}")
+                print("API key no configurada. Chatbot en modo simulado.")
+        except:
+            print("Error configurando chatbot")
             self.model = None
             self.ai_available = False
 
-    def start_chat_session(self, processed_texts: List[str]) -> None:
+    def start_chat_session(self, processed_texts):
         if not processed_texts:
-            print("❌ No hay contenido procesado. Procesa archivos primero.")
+            print("No hay contenido procesado. Procesa archivos primero.")
             return
         
         print("\n" + "-"*60)
@@ -60,29 +59,30 @@ class ChatbotTool:
         context = self._prepare_context(processed_texts)
         self._chat_loop(context)
 
-    def _prepare_context(self, texts: List[str]) -> str:
-        context_parts: List[str] = []
+    def _prepare_context(self, texts):
+        context_parts = []
         
-        for i, text in enumerate(texts, 1):
+        i = 1
+        for text in texts:
             context_parts.append(f"--- CONTENIDO {i} ---\n{text}\n")
+            i = i + 1
         
         return "\n".join(context_parts)
 
-    def _chat_loop(self, context: str) -> None:
-        conversation_history: List[Dict[str, str]] = []
+    def _chat_loop(self, context):
+        conversation_history = []
         
         while True:
             print(f"\n{'-'*50}")
-            user_input: str = input("Tu pregunta: ").strip()
+            user_input = input("Tu pregunta: ").strip()
             
             if not user_input:
                 continue
                 
             if user_input.lower() in ['salir', 'exit', 'quit', 'bye']:
-                print("Hasta luego. Regresando al menú principal...")
+                print("Hasta luego. Regresando al menu principal...")
                 break
             
-            response: str
             if user_input.lower() == 'resumen':
                 response = self._generate_summary(context)
             elif user_input.lower() == 'conceptos':
@@ -103,116 +103,94 @@ class ChatbotTool:
             if len(conversation_history) > 10:
                 conversation_history = conversation_history[-10:]
 
-    def _generate_response(self, question: str, context: str, history: List[Dict]) -> str:
+    def _generate_response(self, question, context, history):
         if not self.ai_available:
             return self._simulate_response(question)
         
         try:
-            prompt: str = f"""
-Eres un asistente de estudio inteligente especializado en ayudar estudiantes a entender y aprender contenido académico.
+            prompt = f"""
+Eres un asistente de estudio.
 
-CONTEXTO DEL MATERIAL DE ESTUDIO:
+CONTEXTO:
 {context[:2000]}
 
-HISTORIAL DE CONVERSACIÓN RECIENTE:
-{self._format_history(history)}
+PREGUNTA: {question}
 
-PREGUNTA ACTUAL: {question}
-
-INSTRUCCIONES:
-- Responde de manera clara y educativa
-- Usa ejemplos cuando sea apropiado
-- Mantén un tono amigable y motivador
-- Si la pregunta no está relacionada con el contenido, explica que solo puedes ayudar con el material de estudio disponible
-- Si no tienes suficiente información, dilo honestamente
-- Usa emojis ocasionalmente para hacer la respuesta más amigable
-
-Responde en español:
+Responde de manera clara.
 """
             
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             return response.text
             
-        except Exception as e:
-            print(f"❌ Error generando respuesta: {e}")
+        except:
+            print("Error generando respuesta")
             return self._simulate_response(question)
 
-    def _format_history(self, history: List[Dict]) -> str:
+    def _format_history(self, history):
         if not history:
             return "No hay historial previo."
         
-        formatted: List[str] = []
+        formatted = []
         for entry in history[-3:]:
             formatted.append(f"Usuario: {entry['user']}")
             formatted.append(f"Asistente: {entry['assistant'][:100]}...")
         
         return "\n".join(formatted)
 
-    def _generate_summary(self, context: str) -> str:
+    def _generate_summary(self, context):
         if not self.ai_available:
-            return "📝 Resumen simulado: El contenido cubre temas importantes de programación orientada a objetos, incluyendo conceptos fundamentales, principios básicos y ejemplos prácticos."
+            return "Resumen simulado: El contenido cubre temas importantes de programacion orientada a objetos."
         
         try:
-            prompt: str = f"""
-Genera un resumen conciso y estructurado del siguiente contenido de estudio:
+            prompt = f"""
+Genera un resumen del siguiente contenido:
 
 {context[:1500]}
 
-El resumen debe incluir:
-- Los temas principales
-- Los conceptos clave
-- Los puntos más importantes para recordar
-
-Formato: Usa viñetas y sé claro y directo.
+Usa viñetas y se claro.
 """
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            return f"❌ Error generando resumen: {e}"
+        except:
+            return "Error generando resumen"
 
-    def _extract_concepts(self, context: str) -> str:
+    def _extract_concepts(self, context):
         if not self.ai_available:
-            return "🎯 Conceptos principales: Programación Orientada a Objetos, Encapsulación, Herencia, Polimorfismo, Abstracción, Clases, Objetos, Métodos, Atributos."
+            return "Conceptos principales: POO, Encapsulacion, Herencia, Polimorfismo, Abstraccion, Clases, Objetos, Metodos, Atributos."
         
         try:
-            prompt: str = f"""
-Extrae los conceptos principales y términos clave del siguiente contenido de estudio:
+            prompt = f"""
+Extrae los conceptos principales del siguiente contenido:
 
 {context[:1500]}
 
-Formato: Lista los conceptos más importantes, uno por línea, con una breve explicación de cada uno.
+Lista los conceptos mas importantes.
 """
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            return f"❌ Error extrayendo conceptos: {e}"
+        except:
+            return "Error extrayendo conceptos"
 
-    def _generate_examples(self, context: str) -> str:
+    def _generate_examples(self, context):
         if not self.ai_available:
-            return "💡 Ejemplo simulado: Si tienes una clase 'Estudiante' con atributos como 'nombre' y 'edad', puedes crear objetos como 'estudiante1 = Estudiante(\"María\", 20)' para representar estudiantes específicos."
+            return "Ejemplo simulado: Si tienes una clase 'Estudiante' con atributos como 'nombre' y 'edad', puedes crear objetos."
         
         try:
-            prompt: str = f"""
-Basándote en el siguiente contenido de estudio, genera ejemplos prácticos y claros:
+            prompt = f"""
+Genera ejemplos practicos del siguiente contenido:
 
 {context[:1500]}
 
-Los ejemplos deben ser:
-- Fáciles de entender
-- Relevantes al contenido
-- Útiles para el aprendizaje
-
-Formato: Explica cada ejemplo paso a paso.
+Ejemplos faciles de entender.
 """
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            return f"❌ Error generando ejemplos: {e}"
+        except:
+            return "Error generando ejemplos"
 
-    def _simulate_response(self, question: str) -> str:
-        responses: List[str] = [
-            f"🤖 Respuesta simulada para: '{question}'. El contenido procesado contiene información valiosa sobre programación orientada a objetos.",
-            f"💡 Basándome en el contenido disponible, puedo ayudarte con conceptos de POO, pero necesitaría la IA real para una respuesta más específica.",
-            f"📚 El material procesado incluye temas importantes. Para una respuesta detallada sobre '{question}', activa la API de Gemini.",
+    def _simulate_response(self, question):
+        responses = [
+            f"Respuesta simulada para: '{question}'. El contenido contiene informacion sobre POO.",
+            f"Para una respuesta detallada sobre '{question}', activa la API de Gemini.",
         ]
         return responses[hash(question) % len(responses)]

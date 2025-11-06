@@ -1,6 +1,5 @@
 import os
 import re
-from typing import Optional, List, Any
 import google.generativeai as genai
 from dotenv import load_dotenv
 
@@ -8,133 +7,120 @@ load_dotenv()
 
 class ContentProcessor:
     
-    def __init__(self) -> None:
-        """Inicializa el procesador con cliente de IA"""
+    def __init__(self):
         try:
-            api_key: Optional[str] = os.getenv('GEMINI_API_KEY')
+            api_key = os.getenv('GEMINI_API_KEY')
             if api_key and api_key != 'tu_api_key_aqui':
                 genai.configure(api_key=api_key)
                 
-                # Intentar con diferentes modelos disponibles (orden de preferencia)
-                model_names: List[str] = [
-                    'models/gemini-flash-latest',      # Alias al más reciente
-                    'models/gemini-2.5-flash',         # Gemini 2.5 Flash
-                    'models/gemini-2.0-flash',         # Gemini 2.0 Flash
-                    'models/gemini-pro-latest',        # Pro más reciente
-                    'models/gemini-2.5-pro'            # Gemini 2.5 Pro
+                model_names = [
+                    'models/gemini-flash-latest',
+                    'models/gemini-2.5-flash',
+                    'models/gemini-2.0-flash',
+                    'models/gemini-pro-latest',
+                    'models/gemini-2.5-pro'
                 ]
-                self.model: Optional[Any] = None
+                self.model = None
                 
                 for model_name in model_names:
                     try:
                         self.model = genai.GenerativeModel(model_name)
-                        print(f"✅ Modelo de IA configurado: {model_name}")
+                        print(f"Modelo de IA configurado: {model_name}")
                         break
-                    except Exception as model_error:
-                        print(f"⚠️ Modelo {model_name} no disponible: {model_error}")
+                    except:
                         continue
                 
                 if self.model:
-                    self.ai_available: bool = True
+                    self.ai_available = True
                 else:
                     self.ai_available = False
-                    print("❌ Ningún modelo de Gemini disponible")
+                    print("Ningun modelo de Gemini disponible")
             else:
                 self.model = None
                 self.ai_available = False
-                print("⚠️ API key de Gemini no configurada. Funcionando en modo simulado.")
-        except Exception as e:
-            print(f"⚠️ IA no disponible: {e}")
+                print("API key de Gemini no configurada.")
+        except:
+            print(f"IA no disponible")
             self.model = None
             self.ai_available = False
 
-    def process_audio(self, file_path: str) -> str:
-        """
-        Procesa archivos de audio usando IA para transcripción.
-        """
+    def process_audio(self, file_path):
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Archivo de audio no encontrado: {file_path}")
         
         if self.ai_available:
             try:
-                # Simulación de transcripción con IA
-                response: Any = self.model.generate_content(
+                response = self.model.generate_content(
                     f"Transcribe este archivo de audio: {os.path.basename(file_path)}"
                 )
                 return response.text
-            except Exception as e:
-                print(f"❌ Error en transcripción IA: {e}")
-                return f"Transcripción simulada del archivo de audio {file_path}"
+            except:
+                print(f"Error en transcripcion IA")
+                return f"Transcripcion simulada del archivo de audio {file_path}"
         else:
-            return f"Transcripción simulada del archivo de audio {file_path}"
+            return f"Transcripcion simulada del archivo de audio {file_path}"
 
-    def process_text_with_ai(self, text: str) -> str:
-        """
-        Procesa texto usando IA para mejorarlo y estructurarlo.
-        """
+    def process_text_with_ai(self, text):
         if not self.ai_available or not text.strip():
             return text
         
         try:
-            prompt: str = f"""
+            prompt = f"""
             Procesa y mejora este texto para estudio:
-            - Corrige errores ortográficos
+            - Corrige errores ortograficos
             - Mejora la estructura
-            - Mantén el contenido original
-            - Hazlo más claro para estudiantes
+            - Manten el contenido original
+            - Hazlo mas claro para estudiantes
             
             Texto: {text[:1000]}
             """
             
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             return response.text
-        except Exception as e:
-            print(f"❌ Error en procesamiento IA: {e}")
+        except:
+            print(f"Error en procesamiento IA")
             return text
 
-    def clean_text(self, text: str) -> str:
-        """
-        Limpia el texto eliminando caracteres innecesarios y mejorando formato.
-        """
+    def clean_text(self, text):
         if not text:
             return ""
         
-        # Eliminar caracteres de control y espacios extra
         text = re.sub(r'\s+', ' ', text)
         
-        # Eliminar caracteres especiales problemáticos
         text = re.sub(r'[^\w\s\.\,\;\:\!\?\-\(\)]', '', text)
         
-        # Limpiar espacios al inicio y final
         text = text.strip()
         
-        # Capitalizar primera letra
         if text:
             text = text[0].upper() + text[1:]
         
         return text
 
-    def extract_key_concepts(self, text: str) -> List[str]:
-        """
-        Extrae conceptos clave del texto usando IA.
-        """
+    def extract_key_concepts(self, text):
         if not self.ai_available or not text.strip():
             return []
         
         try:
-            prompt: str = f"""
-            Extrae los conceptos clave más importantes de este texto para estudio.
-            Devuelve solo una lista de conceptos, uno por línea:
+            prompt = f"""
+            Extrae los conceptos clave mas importantes de este texto para estudio.
+            Devuelve solo una lista de conceptos, uno por linea:
             
             {text[:800]}
             """
             
-            response: Any = self.model.generate_content(prompt)
+            response = self.model.generate_content(prompt)
             
-            # Dividir respuesta en líneas y limpiar
-            concepts: List[str] = [line.strip() for line in response.text.split('\n') if line.strip()]
-            return concepts[:10]  # Máximo 10 conceptos
+            concepts = []
+            for line in response.text.split('\n'):
+                if line.strip():
+                    concepts.append(line.strip())
             
-        except Exception as e:
-            print(f"❌ Error extrayendo conceptos: {e}")
+            resultado = []
+            for i in range(len(concepts)):
+                if i < 10:
+                    resultado.append(concepts[i])
+            return resultado
+            
+        except:
+            print(f"Error extrayendo conceptos")
             return []

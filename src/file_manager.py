@@ -1,74 +1,62 @@
 import os
 import shutil
-from typing import Optional, List, Any
 
 class FileManager:
     STORAGE_DIR = os.path.join(os.path.dirname(__file__), "storage")
     
     @staticmethod
-    def init_storage() -> None:
+    def init_storage():
         if not os.path.exists(FileManager.STORAGE_DIR):
             os.makedirs(FileManager.STORAGE_DIR)
 
     @staticmethod
-    def save_file(file_path: str) -> str: 
+    def save_file(file_path): 
         if not os.path.isfile(file_path):
             raise FileNotFoundError(f"El archivo {file_path} no existe")
         
         FileManager.init_storage()
-        filename: str = os.path.basename(file_path)
-        dest_path: str = os.path.join(FileManager.STORAGE_DIR, filename)
+        filename = os.path.basename(file_path)
+        dest_path = os.path.join(FileManager.STORAGE_DIR, filename)
         
         if os.path.abspath(file_path) == os.path.abspath(dest_path):
             return dest_path
         
-        counter: int = 1
-        original_dest: str = dest_path
+        counter = 1
+        original_dest = dest_path
         while os.path.exists(dest_path):
-            name: str
-            ext: str
             name, ext = os.path.splitext(filename)
             dest_path = os.path.join(FileManager.STORAGE_DIR, f"{name}_{counter}{ext}")
-            counter += 1
+            counter = counter + 1
         
         shutil.copy(file_path, dest_path) 
         return dest_path
 
     @staticmethod
-    def delete_file(filename: str) -> bool:
+    def delete_file(filename):
         try:
-            path: str = os.path.join(FileManager.STORAGE_DIR, filename)
+            path = os.path.join(FileManager.STORAGE_DIR, filename)
             
-          
             if not os.path.exists(path):
-                print(f"⚠️ El archivo '{filename}' no existe en el almacenamiento.")
+                print(f"El archivo '{filename}' no existe.")
                 return False
             
-
             if not os.path.isfile(path):
-                print(f"⚠️ '{filename}' no es un archivo válido.")
+                print(f"'{filename}' no es un archivo valido.")
                 return False
             
-
             os.remove(path)
-            print(f"🗑️ Archivo '{filename}' eliminado del almacenamiento.")
+            print(f"Archivo '{filename}' eliminado.")
             return True
             
-        except PermissionError:
-            print(f"❌ Error de permisos: No se puede eliminar '{filename}'.")
-            return False
-        except OSError as e:
-            print(f"❌ Error del sistema al eliminar '{filename}': {str(e)}")
-            return False
-        except Exception as e:
-            print(f"❌ Error inesperado al eliminar '{filename}': {str(e)}")
+        except:
+            print(f"Error al eliminar '{filename}'")
             return False
 
     @staticmethod 
-    def get_file_info(filename: str) -> Optional[dict]:
-        path: str = os.path.join(FileManager.STORAGE_DIR, filename) 
+    def get_file_info(filename):
+        path = os.path.join(FileManager.STORAGE_DIR, filename) 
         if os.path.exists(path):
-            size: int = os.path.getsize(path)  
+            size = os.path.getsize(path)  
             return {
                 "name": filename,
                 "size": size,
@@ -77,16 +65,16 @@ class FileManager:
         return None
 
     @staticmethod
-    def list_files() -> List[str]:
+    def list_files():
         FileManager.init_storage()
         return os.listdir(FileManager.STORAGE_DIR)
 
     @staticmethod
-    def extract_text(file_path: str) -> str:
+    def extract_text(file_path):
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Archivo no encontrado: {file_path}")
         
-        file_extension: str = os.path.splitext(file_path)[1].lower()
+        file_extension = os.path.splitext(file_path)[1].lower()
         
         try:
             if file_extension in ['.txt', '.md', '.py']:
@@ -97,31 +85,35 @@ class FileManager:
                 return FileManager._extract_csv_file(file_path)
             else:
                 return f"[Archivo {file_extension}] Contenido no procesable directamente"
-        except Exception as e:
-            return f"Error extrayendo texto de {file_path}: {str(e)}"
+        except:
+            return f"Error extrayendo texto de {file_path}"
 
     @staticmethod
-    def _extract_text_file(file_path: str) -> str:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            return file.read()
+    def _extract_text_file(file_path):
+        file = open(file_path, 'r', encoding='utf-8')
+        texto = file.read()
+        file.close()
+        return texto
 
     @staticmethod
-    def _extract_json_file(file_path: str) -> str:
+    def _extract_json_file(file_path):
         import json
-        with open(file_path, 'r', encoding='utf-8') as file:
-            data: Any = json.load(file)
-            return f"Contenido JSON: {json.dumps(data, indent=2, ensure_ascii=False)}"
+        file = open(file_path, 'r', encoding='utf-8')
+        data = json.load(file)
+        file.close()
+        return f"Contenido JSON: {json.dumps(data, indent=2, ensure_ascii=False)}"
 
     @staticmethod
-    def _extract_csv_file(file_path: str) -> str:
+    def _extract_csv_file(file_path):
         import csv
-        content: List[str] = []
-        with open(file_path, 'r', encoding='utf-8') as file:
-            reader: Any = csv.reader(file)
-            for row in reader:
-                content.append(" | ".join(row))
+        content = []
+        file = open(file_path, 'r', encoding='utf-8')
+        reader = csv.reader(file)
+        for row in reader:
+            content.append(" | ".join(row))
+        file.close()
         return "Contenido CSV:\n" + "\n".join(content)
 
     @staticmethod
-    def get_supported_extensions() -> List[str]:
+    def get_supported_extensions():
         return ['.txt', '.md', '.py', '.json', '.csv', '.mp3', '.wav']
